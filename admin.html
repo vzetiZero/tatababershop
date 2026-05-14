@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tata BarberShop Admin</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #171717; color: #f5f1e8; }
+        .shell { width: min(1100px, calc(100% - 32px)); margin: 32px auto; }
+        .panel, .login-card { background: #242424; border: 1px solid rgba(199, 169, 110, 0.25); border-radius: 16px; box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28); }
+        .login-card { width: min(420px, 100%); margin: 80px auto; padding: 28px; }
+        .panel { padding: 24px; }
+        h1, h2, h3 { margin: 0 0 16px; color: #c7a96e; }
+        .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; }
+        .status { font-size: 14px; color: #d2c2a2; }
+        .status[data-type="success"] { color: #98d7a5; }
+        .status[data-type="error"] { color: #ff8a8a; }
+        .status[data-type="warning"] { color: #f0c978; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .stack { display: grid; gap: 16px; }
+        label { display: grid; gap: 6px; font-size: 14px; color: #d9d3c7; }
+        input, textarea { width: 100%; padding: 11px 12px; border-radius: 10px; border: 1px solid #454545; background: #141414; color: #ffffff; }
+        input[readonly] { background: #1e1e1e; color: #cdbf9f; }
+        textarea { resize: vertical; min-height: 90px; }
+        button { border: 0; border-radius: 10px; padding: 11px 16px; font-weight: 700; cursor: pointer; }
+        .primary { background: #c7a96e; color: #161616; }
+        .secondary { background: #353535; color: #fff; }
+        .danger { background: #732d2d; color: #fff; }
+        .section-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .hero-slide-card { display: grid; gap: 12px; padding: 16px; border-radius: 14px; background: #1c1c1c; border: 1px solid rgba(199, 169, 110, 0.18); }
+        .hero-slide-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .checkbox-row { display: flex; align-items: center; gap: 8px; }
+        .checkbox-row input { width: auto; }
+        .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .tabbar { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tabbar button { background: #343434; color: #f7efe0; }
+        .tabbar button.active { background: #c7a96e; color: #171717; }
+        [hidden] { display: none !important; }
+        .hint { color: #b7ac98; font-size: 13px; line-height: 1.5; }
+        .code-note { font-family: Consolas, monospace; white-space: pre-wrap; background: #101010; border: 1px solid #343434; border-radius: 10px; padding: 14px; color: #d5d0c5; }
+        @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } .toolbar { flex-direction: column; align-items: flex-start; } }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <section id="loginView" class="login-card" hidden>
+            <h1>Tata BarberShop Admin</h1>
+            <p class="hint">Manage Tata BarberShop hero content. If Supabase is left empty, the page works in local-only mode.</p>
+            <div class="stack">
+                <label>Username<input id="loginUsername" type="text" autocomplete="username"></label>
+                <label>Password<input id="loginPassword" type="password" autocomplete="current-password"></label>
+                <div class="actions">
+                    <button id="loginBtn" class="primary" type="button">Login</button>
+                </div>
+                <div id="loginError" class="status" data-type="error"></div>
+            </div>
+        </section>
+
+        <section id="adminView" class="panel" hidden>
+            <div class="toolbar">
+                <div>
+                    <h1>Tata BarberShop Hero Admin</h1>
+                    <div id="syncStatus" class="status">Ready.</div>
+                </div>
+                <div class="actions">
+                    <button id="logoutBtn" class="secondary" type="button">Logout</button>
+                </div>
+            </div>
+
+            <div class="tabbar">
+                <button type="button" class="active" data-tab-trigger="hero">Hero</button>
+                <button type="button" data-tab-trigger="about-images">About Images</button>
+                <button type="button" data-tab-trigger="schema">Schema</button>
+            </div>
+
+            <div data-tab-panel="hero" class="stack">
+                <section class="panel">
+                    <div class="section-head">
+                        <h2>Hero Settings</h2>
+                        <button id="saveHeroSettingsBtn" class="primary" type="button">Save Settings</button>
+                    </div>
+                    <form id="heroSettingsForm" class="grid">
+                        <label>Location Label<input name="locationLabel" type="text"></label>
+                        <label>Wrapper Max Width<input name="wrapperMaxWidth" type="number" min="1200" step="10"></label>
+                        <label>Desktop Side Gap<input name="sideGapDesktop" type="number" min="0" step="1"></label>
+                        <label>Tablet Side Gap<input name="sideGapTablet" type="number" min="0" step="1"></label>
+                        <label>Mobile Side Gap<input name="sideGapMobile" type="number" min="0" step="1"></label>
+                    </form>
+                </section>
+
+                <section class="panel">
+                    <div class="section-head">
+                        <h2>Hero Slides</h2>
+                        <div class="actions">
+                            <button id="addHeroSlideBtn" class="secondary" type="button">Add Slide</button>
+                            <button id="saveHeroSlidesBtn" class="primary" type="button">Save Slides</button>
+                        </div>
+                    </div>
+                    <div id="heroSlidesList" class="stack"></div>
+                </section>
+            </div>
+
+            <div data-tab-panel="about-images" class="stack" hidden>
+                <section class="panel">
+                    <div class="section-head">
+                        <h2>About Images</h2>
+                        <div class="actions">
+                            <button id="addAboutImageBtn" class="secondary" type="button">Add Image</button>
+                            <button id="saveAboutImagesBtn" class="primary" type="button">Save Images</button>
+                        </div>
+                    </div>
+                    <p class="hint">These images replace the hard-coded Elementor images in the WHO WE ARE section.</p>
+                    <div id="aboutImagesList" class="stack"></div>
+                </section>
+            </div>
+
+            <div data-tab-panel="schema" class="panel" hidden>
+                <h2>Schema Notes</h2>
+                <p class="hint">Run `hero_schema.sql` in Supabase SQL Editor. Tata BarberShop uses its own table names and storage bucket for hero/about content. After that, fill `static/js/tata-baber-supabase-config.js` with your project URL and keys.</p>
+                <div class="code-note">Tables used by this admin:
+- tata_baber_hero_settings
+- tata_baber_hero_slides
+- tata_baber_about_images
+
+Storage bucket:
+- tata-baber
+
+Local cache keys:
+- tata_baber_hero_settings
+- tata_baber_hero_slides
+- tata_baber_about_images
+- tata_baber_admin_auth</div>
+            </div>
+        </section>
+    </div>
+
+    <script src="static/js/tata-baber-supabase-config.js"></script>
+    <script src="static/js/tata-baber-admin-hero.js"></script>
+    <script>
+        document.querySelectorAll('[data-tab-trigger]').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var target = button.getAttribute('data-tab-trigger');
+                document.querySelectorAll('[data-tab-trigger]').forEach(function (candidate) {
+                    candidate.classList.toggle('active', candidate === button);
+                });
+                document.querySelectorAll('[data-tab-panel]').forEach(function (panel) {
+                    panel.hidden = panel.getAttribute('data-tab-panel') !== target;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+

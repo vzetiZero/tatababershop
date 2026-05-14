@@ -1,0 +1,171 @@
+@font-face {
+    font-family: "Flaticon";
+    src: url("https://wgl-dsites.net/bladehub/wp-content/themes/bladehub/fonts/flaticon/flaticon.eot");
+    src: url("https://wgl-dsites.net/bladehub/wp-content/themes/bladehub/fonts/flaticon/flaticon.ttf") format("truetype"),
+    url("https://wgl-dsites.net/bladehub/wp-content/themes/bladehub/fonts/flaticon/flaticon.woff2") format("woff2"),
+    url("https://wgl-dsites.net/bladehub/wp-content/themes/bladehub/fonts/flaticon/flaticon.woff") format("woff"),
+    url("https://wgl-dsites.net/bladehub/wp-content/themes/bladehub/fonts/flaticon/flaticon.eot?#iefix") format("embedded-opentype"),
+    url("https://wgl-dsites.net/bladehub/wp-content/themes/bladehub/fonts/flaticon/flaticon.svg#flaticon") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    @font-face {
+        font-family: "Flaticon";
+        src: url("https://wgl-dsites.net/bladehub/wp-content/themes/bladehub/fonts/flaticon/flaticon.svg#flaticon") format("svg");
+    }
+}
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+    font-family: Flaticon;
+    font-size: inherit;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.flaticon-right-arrow:before {
+    content: "\f101";
+}
+.flaticon-more:before {
+    content: "\f102";
+}
+.flaticon-search:before {
+    content: "\f103";
+}
+.flaticon-paper-bag:before {
+    content: "\f104";
+}
+.flaticon-add:before {
+    content: "\f105";
+}
+.flaticon-razor:before {
+    content: "\f106";
+}
+.flaticon-razor-1:before {
+    content: "\f107";
+}
+.flaticon-scissors:before {
+    content: "\f108";
+}
+.flaticon-razor-2:before {
+    content: "\f109";
+}
+.flaticon-gentleman:before {
+    content: "\f10a";
+}
+.flaticon-checked:before {
+    content: "\f10b";
+}
+.flaticon-arroba:before {
+    content: "\f10c";
+}
+.flaticon-barber:before {
+    content: "\f10d";
+}
+.flaticon-mustache:before {
+    content: "\f10e";
+}
+.flaticon-hair-comb:before {
+    content: "\f10f";
+}
+.flaticon-comb:before {
+    content: "\f110";
+}
+.flaticon-razor-3:before {
+    content: "\f111";
+}
+.flaticon-hair-dryer:before {
+    content: "\f112";
+}
+.flaticon-comb-1:before {
+    content: "\f113";
+}
+.flaticon-comb-2:before {
+    content: "\f114";
+}
+.flaticon-shaving-cream:before {
+    content: "\f115";
+}
+.flaticon-hair-spray:before {
+    content: "\f116";
+}
+.flaticon-tie:before {
+    content: "\f117";
+}
+.flaticon-cream:before {
+    content: "\f118";
+}
+.flaticon-cream-1:before {
+    content: "\f119";
+}
+.flaticon-mirror:before {
+    content: "\f11a";
+}
+.flaticon-plus:before {
+    content: "\f11b";
+}
+.flaticon-play-button:before {
+    content: "\f11c";
+}
+.flaticon-quote:before {
+    content: "\f11d";
+}
+.flaticon-hyperlink:before {
+    content: "\f11e";
+}
+.flaticon-heart:before {
+    content: "\f11f";
+}
+.flaticon-statistics:before {
+    content: "\f120";
+}
+.flaticon-chat:before {
+    content: "\f121";
+}
+.flaticon-next:before {
+    content: "\f122";
+}
+.flaticon-information:before {
+    content: "\f123";
+}
+.flaticon-confirm:before {
+    content: "\f124";
+}
+.flaticon-cancel:before {
+    content: "\f125";
+}
+.flaticon-warning:before {
+    content: "\f126";
+}
+.flaticon-close-button:before {
+    content: "\f127";
+}
+.flaticon-remove:before {
+    content: "\f128";
+}
+.flaticon-placeholder:before {
+    content: "\f129";
+}
+.flaticon-call:before {
+    content: "\f12a";
+}
+.flaticon-email:before {
+    content: "\f12b";
+}
+.flaticon-right-arrow-1:before {
+    content: "\f12c";
+}
+.flaticon-bag:before {
+    content: "\f12d";
+}
+.flaticon-up-and-down:before {
+    content: "\f12e";
+}
+.flaticon-heart-2:before {
+    content: "\f12f";
+}
