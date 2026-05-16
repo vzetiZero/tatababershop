@@ -7,7 +7,7 @@
         mapUrl: 'https://www.google.com/maps?cid=3900946233643861895&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAMYASAF&hl=vi&source=embed',
         phone: '+420 773 338 678',
         tel: '+420773338678',
-        contactEmail: '',
+        contactEmail: 'tatabarbershopcz@gmail.com',
         rating: '4.8/5',
         reviewCount: '1 822 reviews',
         hoursShort: 'Mon-Sat 09:00-20:00, Sun 10:00-18:30',
@@ -303,9 +303,7 @@
 
         document.querySelectorAll('.wpcf7 form').forEach((form) => {
             form.addEventListener('submit', function (event) {
-                if ((form.action || '').includes('wgl-dsites.net')) {
-                    event.preventDefault();
-                }
+                event.preventDefault();
 
                 let message = form.querySelector('.tata-form-message');
                 if (!message) {
