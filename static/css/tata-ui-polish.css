@@ -773,6 +773,61 @@ body.has-tata-nav {
     margin-top: clamp(64px, 6vw, 96px) !important;
 }
 
+.elementor-1371 .elementor-element-9080169 {
+    overflow: hidden;
+    padding-top: clamp(64px, 7vw, 104px) !important;
+    padding-bottom: clamp(64px, 7vw, 104px) !important;
+    background:
+        linear-gradient(90deg, rgba(255, 250, 240, 0.76) 0%, rgba(255, 250, 240, 0.58) 50%, rgba(255, 250, 240, 0.74) 100%),
+        linear-gradient(180deg, rgba(247, 239, 222, 0.62), rgba(255, 250, 240, 0.72)),
+        url("../../images-tatabarber/anh_shop05.jpg") center / cover no-repeat !important;
+}
+
+.elementor-1371 .elementor-element-9080169::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(255, 250, 240, 0.2), rgba(255, 250, 240, 0.08)),
+        radial-gradient(circle at 18% 18%, rgba(199, 169, 110, 0.12), transparent 34%);
+    pointer-events: none;
+}
+
+.elementor-1371 .elementor-element-9080169 > .elementor-container {
+    position: relative;
+    z-index: 1;
+}
+
+.elementor-1371 .elementor-element-9080169 .wgl-infobox_wrapper {
+    border-color: rgba(199, 169, 110, 0.34);
+    background: rgba(255, 250, 240, 0.64);
+    box-shadow: 0 14px 34px rgba(75, 58, 24, 0.1);
+    backdrop-filter: blur(3px);
+}
+
+.elementor-1371 .elementor-element-9080169 .wgl-infobox_wrapper:hover {
+    border-color: rgba(199, 169, 110, 0.7);
+    background: rgba(255, 250, 240, 0.76);
+}
+
+.elementor-1371 .elementor-element-9080169 .wgl-infobox_title,
+.elementor-1371 .elementor-element-9080169 .wgl-infobox_title span {
+    color: var(--tata-ink) !important;
+}
+
+.elementor-1371 .elementor-element-9080169 .wgl-infobox_content,
+.elementor-1371 .elementor-element-9080169 .wgl-infobox_content p {
+    color: var(--tata-muted) !important;
+}
+
+.elementor-1371 .elementor-element-9080169 .wgl-icon {
+    color: var(--tata-accent) !important;
+}
+
+.elementor-1371 .elementor-element-9080169 .wgl-infobox_button {
+    color: var(--tata-accent) !important;
+}
+
 @media (min-width: 1201px) {
     .elementor-1371 .elementor-element-9080169 > .elementor-container {
         display: grid !important;
@@ -1701,6 +1756,18 @@ body.has-tata-nav {
     .tata-reservio-service__button {
         grid-column: 2;
         width: 100%;
+    }
+
+    .elementor-1371 .elementor-element-9080169 {
+        background:
+            linear-gradient(90deg, rgba(255, 250, 240, 0.8) 0%, rgba(255, 250, 240, 0.62) 50%, rgba(255, 250, 240, 0.78) 100%),
+            linear-gradient(180deg, rgba(247, 239, 222, 0.64), rgba(255, 250, 240, 0.74)),
+            url("../../images-tatabarber/anh_shop05.jpg") center / cover no-repeat !important;
+    }
+
+    .elementor-1371 .elementor-element-9080169 .wgl-infobox_wrapper {
+        background: rgba(255, 250, 240, 0.68);
+        backdrop-filter: blur(2px);
     }
 
     .wgl-portfolio_container .swiper-wrapper {
