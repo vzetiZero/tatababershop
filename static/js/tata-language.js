@@ -728,7 +728,7 @@
             acceptNode(node) {
                 if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
                 const parent = node.parentElement;
-                if (!parent || parent.closest('script, style, textarea, input, select')) return NodeFilter.FILTER_REJECT;
+                if (!parent || parent.closest('script, style, textarea, input, select, [data-tata-i18n]')) return NodeFilter.FILTER_REJECT;
                 return NodeFilter.FILTER_ACCEPT;
             }
         });
@@ -750,36 +750,49 @@
         return value.replace(trimmed, translated);
     };
 
+    let isApplyingLanguage = false;
+
     const applyLanguage = (lang, options) => {
-        const target = supported.includes(lang) ? lang : defaultLang;
-        const dictionary = dictionaries[target] || {};
-        window.localStorage.setItem(storageKey, target);
-        document.documentElement.lang = target;
-        document.querySelectorAll('[data-tata-i18n]').forEach((element) => {
-            const source = element.getAttribute('data-tata-i18n') || '';
-            element.textContent = target === 'en' ? source : translateValue(source, dictionary);
-        });
-        getTextNodes(document.body).forEach((node) => {
-            node.nodeValue = target === 'en' ? sourceText(node) : translateValue(sourceText(node), dictionary);
-        });
-        document.querySelectorAll('input[placeholder], textarea[placeholder]').forEach((field) => {
-            if (!field.__tataSourcePlaceholder) field.__tataSourcePlaceholder = field.getAttribute('placeholder') || '';
-            const source = field.__tataSourcePlaceholder;
-            field.setAttribute('placeholder', target === 'en' ? source : translateValue(source, dictionary));
-        });
-        document.querySelectorAll('input[type="submit"][value]').forEach((field) => {
-            if (!field.__tataSourceValue) field.__tataSourceValue = field.getAttribute('value') || '';
-            const source = field.__tataSourceValue;
-            field.setAttribute('value', target === 'en' ? source : translateValue(source, dictionary));
-        });
-        document.querySelectorAll('option').forEach((option) => {
-            if (!option.__tataSourceText) option.__tataSourceText = option.textContent;
-            const source = option.__tataSourceText;
-            option.textContent = target === 'en' ? source : translateValue(source, dictionary);
-        });
-        updateSwitcher(target);
-        if (!options || options.dispatch !== false) {
-            window.dispatchEvent(new CustomEvent('tata-language-change', { detail: { lang: target } }));
+        if (isApplyingLanguage) return;
+        isApplyingLanguage = true;
+        try {
+            const target = supported.includes(lang) ? lang : defaultLang;
+            const dictionary = dictionaries[target] || {};
+            window.localStorage.setItem(storageKey, target);
+            document.documentElement.lang = target;
+            document.querySelectorAll('[data-tata-i18n]').forEach((element) => {
+                const source = element.getAttribute('data-tata-i18n') || '';
+                const translated = target === 'en' ? source : translateValue(source, dictionary);
+                if (element.textContent !== translated) element.textContent = translated;
+            });
+            getTextNodes(document.body).forEach((node) => {
+                const translated = target === 'en' ? sourceText(node) : translateValue(sourceText(node), dictionary);
+                if (node.nodeValue !== translated) node.nodeValue = translated;
+            });
+            document.querySelectorAll('input[placeholder], textarea[placeholder]').forEach((field) => {
+                if (!field.__tataSourcePlaceholder) field.__tataSourcePlaceholder = field.getAttribute('placeholder') || '';
+                const source = field.__tataSourcePlaceholder;
+                const translated = target === 'en' ? source : translateValue(source, dictionary);
+                if (field.getAttribute('placeholder') !== translated) field.setAttribute('placeholder', translated);
+            });
+            document.querySelectorAll('input[type="submit"][value]').forEach((field) => {
+                if (!field.__tataSourceValue) field.__tataSourceValue = field.getAttribute('value') || '';
+                const source = field.__tataSourceValue;
+                const translated = target === 'en' ? source : translateValue(source, dictionary);
+                if (field.getAttribute('value') !== translated) field.setAttribute('value', translated);
+            });
+            document.querySelectorAll('option').forEach((option) => {
+                if (!option.__tataSourceText) option.__tataSourceText = option.textContent;
+                const source = option.__tataSourceText;
+                const translated = target === 'en' ? source : translateValue(source, dictionary);
+                if (option.textContent !== translated) option.textContent = translated;
+            });
+            updateSwitcher(target);
+            if (!options || options.dispatch !== false) {
+                window.dispatchEvent(new CustomEvent('tata-language-change', { detail: { lang: target } }));
+            }
+        } finally {
+            isApplyingLanguage = false;
         }
     };
 
