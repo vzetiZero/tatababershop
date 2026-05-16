@@ -514,6 +514,22 @@ body.has-tata-nav {
     color: #d8bd82 !important;
 }
 
+.tata-hero-social-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.tata-hero-contact-card .tata-hero-social-links .tata-social-link {
+    width: 40px;
+    height: 40px;
+    padding-top: 0 !important;
+    border-top: 0 !important;
+    font-size: 17px !important;
+}
+
 .tata-hero-actions {
     position: absolute;
     left: clamp(20px, calc((100vw - 1200px) / 2 + 16px), 80px);
@@ -1592,6 +1608,18 @@ body.has-tata-nav {
     .tata-hero-contact-card a {
         padding-top: 5px;
         border-top-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .tata-hero-social-links {
+        gap: 7px;
+        padding-top: 7px;
+        border-top-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .tata-hero-contact-card .tata-hero-social-links .tata-social-link {
+        width: 32px;
+        height: 32px;
+        font-size: 14px !important;
     }
 
     .tata-hero-actions {

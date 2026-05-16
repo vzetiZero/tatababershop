@@ -143,7 +143,11 @@
             contactCard.innerHTML = [
                 '<span class="tata-hero-contact-card__label">Location</span>',
                 '<strong><a class="tata-hero-contact-card__address" href="' + siteInfo.mapUrl + '" target="_blank" rel="noopener">' + siteInfo.address + '</a></strong>',
-                '<a href="tel:' + siteInfo.tel + '">' + siteInfo.phone + '</a>'
+                '<a href="tel:' + siteInfo.tel + '">' + siteInfo.phone + '</a>',
+                '<div class="tata-hero-social-links" aria-label="Social links">',
+                '<a class="tata-social-link tata-social-link--facebook" href="https://www.facebook.com/tatabarbershopcz" target="_blank" rel="noopener" aria-label="Tata BarberShop Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>',
+                '<a class="tata-social-link tata-social-link--instagram" href="https://www.instagram.com/tata__barbershop" target="_blank" rel="noopener" aria-label="Tata BarberShop Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>',
+                '</div>'
             ].join('');
             heroWrapper.appendChild(contactCard);
         };
