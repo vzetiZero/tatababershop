@@ -3,7 +3,7 @@
     const siteInfo = {
         name: 'Tata BarberShop',
         logo: 'static/images/tata-logo.png',
-        address: 'Husitsk\u00e1 27, Praha 3',
+        address: 'Husitsk\u00e1 76/27, Praha 3',
         mapUrl: 'https://www.google.com/maps?cid=3900946233643861895&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAMYASAF&hl=vi&source=embed',
         phone: '+420 773 338 678',
         tel: '+420773338678',
