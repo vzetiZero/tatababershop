@@ -121,6 +121,11 @@
             image.classList.remove('rs-lazyload');
             image.setAttribute('loading', 'eager');
             image.setAttribute('fetchpriority', 'high');
+            image.style.visibility = 'visible';
+            image.style.opacity = '1';
+            slideEl.style.backgroundImage = 'url("' + slideData.image_url + '")';
+            slideEl.style.backgroundSize = 'cover';
+            slideEl.style.backgroundPosition = 'center';
         }
 
         const locationLayer = slideEl.querySelector('[id$="-layer-4"]');
@@ -194,6 +199,15 @@
             slides[1] ? slides[1].tab_title : '',
             slides[2] ? slides[2].tab_title : ''
         ];
+        const firstImage = (slides.find((slide) => slide && slide.image_url) || {}).image_url;
+        if (firstImage) {
+            wrapper.style.backgroundImage = 'url("' + firstImage + '")';
+            wrapper.style.backgroundSize = 'cover';
+            wrapper.style.backgroundPosition = 'center';
+            moduleEl.style.backgroundImage = 'url("' + firstImage + '")';
+            moduleEl.style.backgroundSize = 'cover';
+            moduleEl.style.backgroundPosition = 'center';
+        }
 
         slidesRoot.innerHTML = '';
         slides.forEach((slide, index) => {
