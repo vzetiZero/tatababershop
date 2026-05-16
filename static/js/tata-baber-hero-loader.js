@@ -82,16 +82,19 @@
 
         if (primary) {
             primary.innerHTML = titles[0] || '';
+            primary.setAttribute('data-tata-i18n', titles[0] || '');
             primary.setAttribute('data-actions', "o:mouseenter;a:jumptoslide;slide:" + (keys[0] || 'rs-7') + ';');
             primary.style.display = titles[0] ? '' : 'none';
         }
         if (secondary) {
             secondary.innerHTML = titles[1] || '';
+            secondary.setAttribute('data-tata-i18n', titles[1] || '');
             secondary.setAttribute('data-actions', "o:mouseenter;a:jumptoslide;slide:" + (keys[1] || 'rs-10') + ';');
             secondary.style.display = titles[1] ? '' : 'none';
         }
         if (tertiary) {
             tertiary.innerHTML = titles[2] || '';
+            tertiary.setAttribute('data-tata-i18n', titles[2] || '');
             tertiary.setAttribute('data-actions', "o:mouseenter;a:jumptoslide;slide:" + (keys[2] || 'rs-11') + ';');
             tertiary.style.display = titles[2] ? '' : 'none';
         }
@@ -133,12 +136,14 @@
         if (locationLayer) {
             saveOriginalText(locationLayer);
             locationLayer.innerHTML = settings.locationLabel || 'LOCATION';
+            locationLayer.setAttribute('data-tata-i18n', settings.locationLabel || 'LOCATION');
         }
 
         const eyebrowLayer = slideEl.querySelector('[id$="-layer-3"]');
         if (eyebrowLayer) {
             saveOriginalText(eyebrowLayer);
             eyebrowLayer.innerHTML = slideData.eyebrow || '';
+            eyebrowLayer.setAttribute('data-tata-i18n', slideData.eyebrow || '');
             eyebrowLayer.style.display = slideData.eyebrow ? '' : 'none';
         }
 
@@ -224,6 +229,9 @@
     window.tataBaberHeroReady = (async function () {
         const [settings, slides] = await Promise.all([loadHeroSettings(), loadHeroSlides()]);
         applyHeroData(settings, slides);
+        if (typeof window.tataApplyLanguage === 'function') {
+            window.tataApplyLanguage(window.localStorage.getItem('bladehubLang') || 'en', { dispatch: false });
+        }
         return { settings: settings, slides: slides };
     })();
     window.bladehubHeroReady = window.tataBaberHeroReady;
