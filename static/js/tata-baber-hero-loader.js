@@ -116,7 +116,11 @@
         const image = slideEl.querySelector('.rev-slidebg');
         if (image && slideData.image_url) {
             image.setAttribute('data-lazyload', slideData.image_url);
-            image.setAttribute('src', 'wp-content/plugins/revslider/public/assets/assets/dummy.png');
+            image.setAttribute('src', slideData.image_url);
+            image.removeAttribute('srcset');
+            image.classList.remove('rs-lazyload');
+            image.setAttribute('loading', 'eager');
+            image.setAttribute('fetchpriority', 'high');
         }
 
         const locationLayer = slideEl.querySelector('[id$="-layer-4"]');
