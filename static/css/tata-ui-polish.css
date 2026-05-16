@@ -1200,6 +1200,64 @@ body.has-tata-nav {
     font-weight: 700;
 }
 
+.tata-social-block {
+    margin-top: 22px;
+}
+
+.tata-social-block > strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--tata-ink);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.tata-social-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tata-social-link {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 50%;
+    color: #fff !important;
+    font-size: 18px !important;
+    font-weight: 900;
+    line-height: 1 !important;
+    text-decoration: none !important;
+    box-shadow: 0 12px 24px rgba(17, 17, 17, 0.18);
+    transition: filter 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.tata-social-link i {
+    line-height: 1;
+}
+
+.tata-social-link:hover {
+    filter: brightness(1.08) saturate(1.14);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 30px rgba(17, 17, 17, 0.26);
+}
+
+.tata-social-link--facebook {
+    background: #1877f2;
+    color: #fff !important;
+}
+
+.tata-social-link--instagram {
+    background: radial-gradient(circle at 30% 105%, #fdf497 0 12%, #fd5949 38%, #d6249f 64%, #285aeb 100%);
+    color: #fff !important;
+}
+
 .footer {
     background: #111 !important;
 }
@@ -1286,6 +1344,18 @@ body.has-tata-nav {
     font-size: 13px !important;
     font-weight: 900;
     text-transform: uppercase;
+}
+
+.tata-social-block--footer {
+    margin-top: 18px;
+}
+
+.tata-social-block--footer > strong {
+    color: #fff;
+}
+
+.tata-social-block--footer .tata-social-link {
+    color: #fff !important;
 }
 
 .tata-footer-bottom {
