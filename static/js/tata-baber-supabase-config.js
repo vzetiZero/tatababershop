@@ -3,18 +3,20 @@
         supabaseUrl: 'https://dyyihoawqcerigmgnjbg.supabase.co',
         supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5eWlob2F3cWNlcmlnbWduamJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3MjAyMzQsImV4cCI6MjA5NDI5NjIzNH0.PsGYEGy8zJyrFq0hPyzybgLRv7_Hrtv15ex7armQN7M',
         supabaseServiceKey: '',
-        adminTable: 'admin',
+        adminTable: 'tata_baber_admin_auth',
         tables: {
-            heroSettings: 'tata_baber_hero_settings',
-            heroSlides: 'tata_baber_hero_slides',
-            aboutImages: 'tata_baber_about_images'
+            heroSlides: 'tata_baber_hero_slides'
+        },
+        cloudinary: {
+            cloudName: 'dccqzztkk',
+            uploadPreset: 'ken_barbershop',
+            folder: 'tatabarbershop'
         },
         storageBucket: 'tata-baber',
         adminAuthKey: 'tata_baber_admin_auth',
         localKeys: {
             settings: 'tata_baber_hero_settings',
-            slides: 'tata_baber_hero_slides',
-            aboutImages: 'tata_baber_about_images'
+            slides: 'tata_baber_hero_slides'
         },
         defaultHeroSettings: {
             locationLabel: 'LOCATION',
@@ -34,10 +36,7 @@
                 title_secondary: 'GROOMING & SHAVING',
                 title_tertiary: 'MANICURE & SPA',
                 image_url: './images-tatabarber/banner01.jpg',
-                thumb_url: './images-tatabarber/banner01.jpg',
-                address_html: 'Husitsk\u00e1 27, Praha 3',
-                email: '',
-                phone: '+420 773 338 678'
+                thumb_url: './images-tatabarber/banner01.jpg'
             },
             {
                 id: 'hero-slide-2',
@@ -49,10 +48,7 @@
                 title_secondary: 'GROOMING & SHAVING',
                 title_tertiary: 'MANICURE & SPA',
                 image_url: './images-tatabarber/banner01.jpg',
-                thumb_url: './images-tatabarber/banner01.jpg',
-                address_html: 'Husitsk\u00e1 27, Praha 3',
-                email: '',
-                phone: '+420 773 338 678'
+                thumb_url: './images-tatabarber/banner01.jpg'
             },
             {
                 id: 'hero-slide-3',
@@ -64,10 +60,7 @@
                 title_secondary: 'GROOMING & SHAVING',
                 title_tertiary: 'MANICURE & SPA',
                 image_url: './images-tatabarber/banner02.jpg',
-                thumb_url: './images-tatabarber/banner02.jpg',
-                address_html: 'Husitsk\u00e1 27, Praha 3',
-                email: '',
-                phone: '+420 773 338 678'
+                thumb_url: './images-tatabarber/banner02.jpg'
             }
         ],
         defaultAboutImages: [
@@ -75,14 +68,14 @@
                 id: 'about-image-1',
                 sort_order: 1,
                 active: true,
-                image_url: 'wp-content/uploads/2023/04/about-3-1.jpg',
+                image_url: 'images-tatabarber/hair/anh1.jpg',
                 alt_text: 'Tata BarberShop haircut detail'
             },
             {
                 id: 'about-image-2',
                 sort_order: 2,
                 active: true,
-                image_url: 'wp-content/uploads/2023/04/about-3-2.jpg',
+                image_url: 'images-tatabarber/hair/anh2.jpg',
                 alt_text: 'Tata BarberShop grooming tools'
             }
         ]
@@ -112,6 +105,15 @@
 
     config.isSupabaseConfigured = function () {
         return Boolean(config.supabaseUrl && (config.supabaseAnonKey || config.supabaseServiceKey));
+    };
+
+    config.isCloudinaryConfigured = function () {
+        return Boolean(config.cloudinary && config.cloudinary.cloudName && config.cloudinary.uploadPreset);
+    };
+
+    config.getResponsiveCloudinaryUrl = function (url, transform) {
+        if (!url || !url.includes('/upload/')) return url;
+        return url.replace('/upload/', '/upload/' + (transform || 'f_auto,q_auto,c_fit,w_1800,h_1000') + '/');
     };
 
     config.isMissingTableError = function (error) {
@@ -199,6 +201,40 @@
         }
 
         return config.supabaseUrl.replace(/\/$/, '') + '/storage/v1/object/public/' + config.storageBucket + '/' + path;
+    };
+
+    config.cloudinaryUpload = async function (file, folder, transform) {
+        if (!config.isCloudinaryConfigured()) {
+            throw new Error('Cloudinary is not configured.');
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', config.cloudinary.uploadPreset);
+
+        const baseFolder = String(config.cloudinary.folder || '').replace(/^\/+|\/+$/g, '');
+        const childFolder = String(folder || '').replace(/^\/+|\/+$/g, '');
+        const targetFolder = [baseFolder, childFolder].filter(Boolean).join('/');
+        if (targetFolder) {
+            formData.append('folder', targetFolder);
+        }
+
+        const response = await fetch('https://api.cloudinary.com/v1_1/' + config.cloudinary.cloudName + '/image/upload', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || ('Cloudinary upload failed with status ' + response.status));
+        }
+
+        const data = await response.json();
+        if (!data.secure_url) {
+            throw new Error('Cloudinary did not return a secure URL.');
+        }
+
+        return config.getResponsiveCloudinaryUrl(data.secure_url, transform);
     };
 
     return config;

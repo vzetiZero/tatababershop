@@ -1,8 +1,6 @@
 ﻿(function () {
     const config = window.tataBaberConfig || {};
-    const settingsKey = config.localKeys ? config.localKeys.settings : 'tata_baber_hero_settings';
     const slidesKey = config.localKeys ? config.localKeys.slides : 'tata_baber_hero_slides';
-    const heroSettingsTable = config.tables && config.tables.heroSettings ? config.tables.heroSettings : 'tata_baber_hero_settings';
     const heroSlidesTable = config.tables && config.tables.heroSlides ? config.tables.heroSlides : 'tata_baber_hero_slides';
     const defaultSettings = config.defaultHeroSettings || {};
     const defaultSlides = config.defaultHeroSlides || [];
@@ -28,34 +26,34 @@
     const normalizeSlides = (slides) => {
         const fallback = defaultSlides.map((slide) => Object.assign({}, slide));
         if (!Array.isArray(slides) || slides.length === 0) return fallback;
-        return slides
-            .filter((slide) => slide && slide.active !== false)
-            .sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0))
-            .map((slide, index) => Object.assign({}, fallback[Math.min(index, fallback.length - 1)] || fallback[0] || {}, slide));
+        const source = slides
+            .filter((slide) => slide)
+            .sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0));
+        const normalizedFixed = fallback.map((fixedSlide, index) => {
+            const savedSlide = source[index] || {};
+            return Object.assign({}, fixedSlide, {
+                image_url: savedSlide.image_url || fixedSlide.image_url,
+                thumb_url: savedSlide.thumb_url || fixedSlide.thumb_url,
+                active: savedSlide.active !== undefined ? savedSlide.active : fixedSlide.active,
+                id: fixedSlide.id,
+                tab_title: fixedSlide.tab_title || '',
+                eyebrow: fixedSlide.eyebrow || '',
+                sort_order: Number(savedSlide.sort_order || fixedSlide.sort_order || index + 1)
+            });
+        });
+        const extraSlides = source.slice(fallback.length).map((slide, extraIndex) => ({
+            id: slide.id || ('hero-slide-extra-' + (extraIndex + 1)),
+            tab_title: '',
+            eyebrow: '',
+            image_url: slide.image_url || '',
+            thumb_url: slide.thumb_url || '',
+            active: slide.active !== false,
+            sort_order: Number(slide.sort_order || fallback.length + extraIndex + 1)
+        }));
+        return normalizedFixed.concat(extraSlides).filter((slide) => slide.active !== false);
     };
 
     const loadHeroSettings = async function () {
-        const local = config.loadLocal ? config.loadLocal(settingsKey, null) : null;
-        if (local) {
-            return normalizeSettings(local);
-        }
-        if (config.isSupabaseConfigured && config.isSupabaseConfigured()) {
-            try {
-                const rows = await config.supabaseFetch(heroSettingsTable + '?select=*&order=updated_at.desc.nullslast&limit=1', {}, false);
-                if (Array.isArray(rows) && rows[0]) {
-                    const settings = normalizeSettings(rows[0]);
-                    config.saveLocal(settingsKey, settings);
-                    return settings;
-                }
-            } catch (error) {
-                const message = 'Hero settings table is missing in Supabase. Using default hero settings.';
-                if (config.isMissingTableError && config.isMissingTableError(error)) {
-                    console.info(message);
-                } else {
-                    console.warn('Hero settings fallback to defaults:', error);
-                }
-            }
-        }
         return normalizeSettings(defaultSettings);
     };
 
@@ -129,27 +127,6 @@
         if (image && slideData.image_url) {
             image.setAttribute('data-lazyload', slideData.image_url);
             image.setAttribute('src', 'wp-content/plugins/revslider/public/assets/assets/dummy.png');
-        }
-
-        const phoneLink = slideEl.querySelector('[id$="-layer-8"]');
-        if (phoneLink) {
-            saveOriginalText(phoneLink);
-            const phonePlain = (slideData.phone || '').replace(/\s+/g, '');
-            phoneLink.href = phonePlain ? 'tel:' + phonePlain.replace(/[^\d+]/g, '') : '#';
-            phoneLink.textContent = slideData.phone || '';
-        }
-
-        const emailLink = slideEl.querySelector('[id$="-layer-7"]');
-        if (emailLink) {
-            saveOriginalText(emailLink);
-            emailLink.href = slideData.email ? 'mailto:' + slideData.email : '#';
-            emailLink.textContent = slideData.email || '';
-        }
-
-        const addressLayer = slideEl.querySelector('[id$="-layer-6"]');
-        if (addressLayer) {
-            saveOriginalText(addressLayer);
-            addressLayer.innerHTML = slideData.address_html || '';
         }
 
         const locationLayer = slideEl.querySelector('[id$="-layer-4"]');

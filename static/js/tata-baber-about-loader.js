@@ -1,7 +1,5 @@
 ﻿(function () {
     const config = window.tataBaberConfig || {};
-    const table = config.tables && config.tables.aboutImages ? config.tables.aboutImages : 'tata_baber_about_images';
-    const localKey = config.localKeys && config.localKeys.aboutImages ? config.localKeys.aboutImages : 'tata_baber_about_images';
     const defaults = config.defaultAboutImages || [];
 
     const normalizeImages = (images) => {
@@ -19,26 +17,6 @@
     };
 
     const loadImages = async () => {
-        const local = config.loadLocal ? config.loadLocal(localKey, null) : null;
-        if (local) return normalizeImages(local);
-
-        if (config.isSupabaseConfigured && config.isSupabaseConfigured()) {
-            try {
-                const rows = await config.supabaseFetch(table + '?select=*&active=eq.true&order=sort_order.asc', {}, false);
-                if (Array.isArray(rows) && rows.length) {
-                    const images = normalizeImages(rows);
-                    if (config.saveLocal) config.saveLocal(localKey, images);
-                    return images;
-                }
-            } catch (error) {
-                if (config.isMissingTableError && config.isMissingTableError(error)) {
-                    console.info('About images table is missing in Supabase. Using default about images.');
-                } else {
-                    console.warn('About images fallback to defaults:', error);
-                }
-            }
-        }
-
         return normalizeImages(defaults);
     };
 

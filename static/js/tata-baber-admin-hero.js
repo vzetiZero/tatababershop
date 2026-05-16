@@ -1,10 +1,8 @@
 ﻿(function () {
     const config = window.tataBaberConfig;
     if (!config) return;
-    const heroSettingsTable = config.tables && config.tables.heroSettings ? config.tables.heroSettings : 'tata_baber_hero_settings';
     const heroSlidesTable = config.tables && config.tables.heroSlides ? config.tables.heroSlides : 'tata_baber_hero_slides';
-    const aboutImagesTable = config.tables && config.tables.aboutImages ? config.tables.aboutImages : 'tata_baber_about_images';
-    const adminTable = config.adminTable || 'admin';
+    const adminTable = config.adminTable || 'tata_baber_admin_auth';
 
     const state = {
         currentSlides: [],
@@ -43,23 +41,26 @@
             .sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0))
             .forEach((slide, index) => {
                 const card = document.createElement('article');
+                const previewUrl = slide.image_url || slide.thumb_url || '';
                 card.className = 'hero-slide-card';
                 card.innerHTML = `
+                    <div class="hero-slide-preview">
+                        ${previewUrl ? `<img src="${previewUrl}" alt="Hero slide ${index + 1} preview">` : '<span>No image selected</span>'}
+                    </div>
+                    <div class="hero-slide-fields">
                     <div class="hero-slide-header">
                         <strong>Slide ${index + 1}</strong>
                         <button type="button" class="danger" data-action="remove" data-id="${slide.id}">Remove</button>
                     </div>
-                    <label>Tab Title<input type="text" data-field="tab_title" data-id="${slide.id}" value="${slide.tab_title || ''}"></label>
-                    <label>Eyebrow<input type="text" data-field="eyebrow" data-id="${slide.id}" value="${slide.eyebrow || ''}"></label>
-                    <label>Hero Image URL<input type="text" data-field="image_url" data-id="${slide.id}" value="${slide.image_url || ''}" readonly></label>
-                    <label>Upload Hero Image<input type="file" accept="image/*" data-upload="image_url" data-id="${slide.id}"></label>
-                    <label>Thumb URL<input type="text" data-field="thumb_url" data-id="${slide.id}" value="${slide.thumb_url || ''}" readonly></label>
-                    <label>Upload Thumb Image<input type="file" accept="image/*" data-upload="thumb_url" data-id="${slide.id}"></label>
-                    <label>Phone<input type="text" data-field="phone" data-id="${slide.id}" value="${slide.phone || ''}"></label>
-                    <label>Email<input type="text" data-field="email" data-id="${slide.id}" value="${slide.email || ''}"></label>
-                    <label>Address HTML<textarea data-field="address_html" data-id="${slide.id}" rows="3">${slide.address_html || ''}</textarea></label>
-                    <label>Sort Order<input type="number" data-field="sort_order" data-id="${slide.id}" value="${slide.sort_order || index + 1}"></label>
-                    <label class="checkbox-row"><input type="checkbox" data-field="active" data-id="${slide.id}" ${slide.active !== false ? 'checked' : ''}> Active</label>
+                    <p class="hint">Upload or replace the banner image. Text in the banner is fixed in the website code.</p>
+                    <label>Image URL<input type="text" data-field="image_url" data-id="${slide.id}" value="${slide.image_url || ''}" readonly></label>
+                    <label>Replace Image<input type="file" accept="image/*" data-upload="image_url" data-id="${slide.id}"></label>
+                    <input type="hidden" data-field="thumb_url" data-id="${slide.id}" value="${slide.thumb_url || ''}">
+                    <div class="compact-row">
+                        <label>Sort Order<input type="number" data-field="sort_order" data-id="${slide.id}" value="${slide.sort_order || index + 1}"></label>
+                        <label class="checkbox-row"><input type="checkbox" data-field="active" data-id="${slide.id}" ${slide.active !== false ? 'checked' : ''}> Active</label>
+                    </div>
+                    </div>
                 `;
                 slidesContainer.appendChild(card);
             });
@@ -97,17 +98,15 @@
     });
 
     const collectSlides = () => {
-        return state.currentSlides.map((slide) => {
+        return state.currentSlides.map((slide, index) => {
+            const fixedSlide = (config.defaultHeroSlides || [])[index] || slide;
             const getField = (field) => slidesContainer.querySelector(`[data-field="${field}"][data-id="${slide.id}"]`);
             const activeInput = getField('active');
             return Object.assign({}, slide, {
-                tab_title: getField('tab_title').value.trim(),
-                eyebrow: getField('eyebrow').value.trim(),
+                tab_title: fixedSlide.tab_title || '',
+                eyebrow: fixedSlide.eyebrow || '',
                 image_url: getField('image_url').value.trim(),
                 thumb_url: getField('thumb_url').value.trim(),
-                phone: getField('phone').value.trim(),
-                email: getField('email').value.trim(),
-                address_html: getField('address_html').value.trim(),
                 sort_order: Number(getField('sort_order').value || 0),
                 active: Boolean(activeInput && activeInput.checked)
             });
@@ -142,16 +141,43 @@
         return value;
     };
 
+    const normalizeFixedSlides = (slides) => {
+        const source = Array.isArray(slides) ? slides : [];
+        const fixedSlides = Array.isArray(config.defaultHeroSlides) ? config.defaultHeroSlides : [];
+        const normalizedFixed = fixedSlides.map((fixedSlide, index) => {
+            const savedSlide = source[index] || {};
+            return Object.assign({}, fixedSlide, {
+                image_url: savedSlide.image_url || fixedSlide.image_url,
+                thumb_url: savedSlide.thumb_url || fixedSlide.thumb_url,
+                active: savedSlide.active !== undefined ? savedSlide.active : fixedSlide.active,
+                id: fixedSlide.id,
+                tab_title: fixedSlide.tab_title || '',
+                eyebrow: fixedSlide.eyebrow || '',
+                sort_order: Number(savedSlide.sort_order || fixedSlide.sort_order || index + 1)
+            });
+        });
+        const extraSlides = source.slice(fixedSlides.length).map((slide, extraIndex) => ({
+            id: slide.id || ('hero-slide-extra-' + (extraIndex + 1)),
+            image_url: slide.image_url || '',
+            thumb_url: slide.thumb_url || '',
+            active: slide.active !== false,
+            tab_title: '',
+            eyebrow: '',
+            sort_order: Number(slide.sort_order || fixedSlides.length + extraIndex + 1)
+        }));
+        return normalizedFixed.concat(extraSlides);
+    };
+
     const loadLocalState = () => {
         const settings = normalizeSettings(config.loadLocal(config.localKeys.settings, config.defaultHeroSettings));
         const slides = config.loadLocal(config.localKeys.slides, config.defaultHeroSlides);
-        const aboutImages = config.loadLocal(config.localKeys.aboutImages, config.defaultAboutImages || []);
+        const aboutImages = config.defaultAboutImages || [];
         heroForm.locationLabel.value = settings.locationLabel || 'LOCATION';
         heroForm.wrapperMaxWidth.value = settings.wrapperMaxWidth || 1820;
         heroForm.sideGapDesktop.value = settings.sideGapDesktop || 0;
         heroForm.sideGapTablet.value = settings.sideGapTablet || 0;
         heroForm.sideGapMobile.value = settings.sideGapMobile || 0;
-        state.currentSlides = Array.isArray(slides) ? slides.map((slide) => Object.assign({}, slide)) : [];
+        state.currentSlides = normalizeFixedSlides(slides);
         state.aboutImages = Array.isArray(aboutImages) ? aboutImages.map((image) => Object.assign({}, image)) : [];
         renderSlides();
         renderAboutImages();
@@ -172,7 +198,10 @@
         const path = 'slides/' + safeSlideId + '/' + field + '-' + Date.now() + '.' + ext;
         let assetUrl = '';
 
-        if (config.isSupabaseConfigured()) {
+        if (config.isCloudinaryConfigured && config.isCloudinaryConfigured()) {
+            const transform = field === 'thumb_url' ? 'f_auto,q_auto,c_fill,w_480,h_320' : 'f_auto,q_auto,c_fit,w_1800,h_1000';
+            assetUrl = await config.cloudinaryUpload(file, 'slides/' + safeSlideId, transform);
+        } else if (config.isSupabaseConfigured()) {
             assetUrl = await config.supabaseStorageUpload(path, file, file.type || 'application/octet-stream', true);
         } else {
             assetUrl = await readFileAsDataUrl(file);
@@ -182,10 +211,15 @@
         if (input) {
             input.value = assetUrl;
         }
+        if (field === 'image_url') {
+            const thumbInput = slidesContainer.querySelector(`[data-field="thumb_url"][data-id="${slideId}"]`);
+            if (thumbInput && !thumbInput.value) thumbInput.value = assetUrl;
+        }
 
         const targetSlide = state.currentSlides.find((slide) => slide.id === slideId);
         if (targetSlide) {
             targetSlide[field] = assetUrl;
+            if (field === 'image_url' && !targetSlide.thumb_url) targetSlide.thumb_url = assetUrl;
         }
 
         config.saveLocal(config.localKeys.slides, collectSlides());
@@ -200,7 +234,9 @@
         const path = 'about-images/' + safeImageId + '/image-' + Date.now() + '.' + ext;
         let assetUrl = '';
 
-        if (config.isSupabaseConfigured()) {
+        if (config.isCloudinaryConfigured && config.isCloudinaryConfigured()) {
+            assetUrl = await config.cloudinaryUpload(file, 'about-images/' + safeImageId, 'f_auto,q_auto,c_fit,w_1200,h_1200');
+        } else if (config.isSupabaseConfigured()) {
             assetUrl = await config.supabaseStorageUpload(path, file, file.type || 'application/octet-stream', true);
         } else {
             assetUrl = await readFileAsDataUrl(file);
@@ -212,7 +248,9 @@
         const targetImage = state.aboutImages.find((image) => image.id === imageId);
         if (targetImage) targetImage.image_url = assetUrl;
 
-        config.saveLocal(config.localKeys.aboutImages, collectAboutImages());
+        if (config.localKeys && config.localKeys.aboutImages) {
+            config.saveLocal(config.localKeys.aboutImages, collectAboutImages());
+        }
         setStatus('Uploaded ' + file.name + '.', 'success');
     };
 
@@ -222,23 +260,9 @@
             return;
         }
         try {
-            const [settingsRows, slideRows] = await Promise.all([
-                config.supabaseFetch(heroSettingsTable + '?select=*&order=updated_at.desc.nullslast&limit=1', {}, false),
-                config.supabaseFetch(heroSlidesTable + '?select=*&order=sort_order.asc', {}, false)
-            ]);
-
-            const settings = Array.isArray(settingsRows) && settingsRows[0] ? normalizeSettings(settingsRows[0]) : config.defaultHeroSettings;
+            const slideRows = await config.supabaseFetch(heroSlidesTable + '?select=*&order=sort_order.asc', {}, false);
             const slides = Array.isArray(slideRows) && slideRows.length ? slideRows : config.defaultHeroSlides;
-            config.saveLocal(config.localKeys.settings, settings);
             config.saveLocal(config.localKeys.slides, slides);
-            try {
-                const aboutRows = await config.supabaseFetch(aboutImagesTable + '?select=*&order=sort_order.asc', {}, false);
-                if (Array.isArray(aboutRows) && aboutRows.length) {
-                    config.saveLocal(config.localKeys.aboutImages, aboutRows);
-                }
-            } catch (error) {
-                console.warn('About images sync failed:', error);
-            }
             loadLocalState();
             setStatus('Synced from Supabase.', 'success');
         } catch (error) {
@@ -249,41 +273,22 @@
     const saveSettings = async () => {
         const payload = collectSettings();
         config.saveLocal(config.localKeys.settings, payload);
-
-        if (!config.isSupabaseConfigured()) {
-            setStatus('Hero settings saved locally.', 'success');
-            return;
-        }
-
-        try {
-            const rows = await config.supabaseFetch(heroSettingsTable + '?select=id&limit=1', {}, true);
-            const body = JSON.stringify(serializeSettings(payload));
-            if (Array.isArray(rows) && rows[0] && rows[0].id) {
-                await config.supabaseFetch(heroSettingsTable + '?id=eq.' + rows[0].id, {
-                    method: 'PATCH',
-                    headers: { Prefer: 'return=representation' },
-                    body: body
-                }, true);
-            } else {
-                await config.supabaseFetch(heroSettingsTable, {
-                    method: 'POST',
-                    headers: { Prefer: 'return=representation' },
-                    body: body
-                }, true);
-            }
-            setStatus('Hero settings saved to Supabase.', 'success');
-        } catch (error) {
-            setStatus('Saved locally. Supabase update failed.', 'error');
-        }
+        setStatus('Hero settings saved locally. Supabase stores banner images only.', 'success');
     };
 
     const saveSlides = async () => {
         const payload = collectSlides();
         state.currentSlides = payload.map((slide) => Object.assign({}, slide));
         config.saveLocal(config.localKeys.slides, payload);
+        const rowsToSave = payload.filter((slide) => String(slide.image_url || '').trim());
 
         if (!config.isSupabaseConfigured()) {
             setStatus('Hero slides saved locally.', 'success');
+            return;
+        }
+
+        if (!rowsToSave.length) {
+            setStatus('Upload at least one slide image before saving to Supabase.', 'error');
             return;
         }
 
@@ -292,20 +297,15 @@
             await config.supabaseFetch(heroSlidesTable, {
                 method: 'POST',
                 headers: { Prefer: 'return=representation' },
-                body: JSON.stringify(payload.map((slide) => ({
+                body: JSON.stringify(rowsToSave.map((slide, index) => ({
                     id: slide.id,
-                    sort_order: slide.sort_order,
+                    sort_order: slide.sort_order || index + 1,
                     active: slide.active,
-                    tab_title: slide.tab_title,
-                    eyebrow: slide.eyebrow,
                     image_url: slide.image_url,
-                    thumb_url: slide.thumb_url,
-                    address_html: slide.address_html,
-                    email: slide.email,
-                    phone: slide.phone
+                    thumb_url: slide.thumb_url || slide.image_url
                 })))
             }, true);
-            setStatus('Hero slides saved to Supabase.', 'success');
+            setStatus('Hero slides saved to Supabase. Empty slides were skipped.', 'success');
         } catch (error) {
             setStatus('Saved locally. Supabase update failed.', 'error');
         }
@@ -314,32 +314,16 @@
     const saveAboutImages = async () => {
         const payload = collectAboutImages();
         state.aboutImages = payload.map((image) => Object.assign({}, image));
-        config.saveLocal(config.localKeys.aboutImages, payload);
+        if (config.localKeys && config.localKeys.aboutImages) {
+            config.saveLocal(config.localKeys.aboutImages, payload);
+        }
 
         if (!config.isSupabaseConfigured()) {
             setStatus('About images saved locally.', 'success');
             return;
         }
 
-        try {
-            await config.supabaseFetch(aboutImagesTable + '?id=not.is.null', { method: 'DELETE' }, true);
-            if (payload.length) {
-                await config.supabaseFetch(aboutImagesTable, {
-                    method: 'POST',
-                    headers: { Prefer: 'return=representation' },
-                    body: JSON.stringify(payload.map((image) => ({
-                        id: image.id,
-                        sort_order: image.sort_order,
-                        active: image.active,
-                        image_url: image.image_url,
-                        alt_text: image.alt_text
-                    })))
-                }, true);
-            }
-            setStatus('About images saved to Supabase.', 'success');
-        } catch (error) {
-            setStatus('Saved locally. Supabase update failed.', 'error');
-        }
+        setStatus('About images are fixed local files and are not saved to Supabase.', 'warning');
     };
 
     const addSlide = () => {
@@ -348,20 +332,17 @@
             id: 'hero-slide-' + Date.now(),
             sort_order: nextIndex,
             active: true,
-            tab_title: 'NEW TAB ' + nextIndex,
-            eyebrow: '',
-            image_url: './images-tatabarber/banner01.jpg',
-            thumb_url: './images-tatabarber/banner01.jpg',
-            address_html: '',
-            email: '',
-            phone: ''
+            image_url: '',
+            thumb_url: ''
         });
         renderSlides();
+        setStatus('New slide added. Upload an image, then save slides.', 'warning');
     };
 
     const removeSlide = (id) => {
         state.currentSlides = state.currentSlides.filter((slide) => slide.id !== id);
         renderSlides();
+        setStatus('Slide removed. Save slides to update Supabase.', 'warning');
     };
 
     const addAboutImage = () => {
@@ -473,7 +454,7 @@
         });
     }
 
-    addSlideBtn.addEventListener('click', addSlide);
+    if (addSlideBtn) addSlideBtn.addEventListener('click', addSlide);
     saveSettingsBtn.addEventListener('click', saveSettings);
     saveSlidesBtn.addEventListener('click', saveSlides);
     if (addAboutImageBtn) addAboutImageBtn.addEventListener('click', addAboutImage);

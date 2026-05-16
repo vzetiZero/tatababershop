@@ -28,8 +28,13 @@
         .secondary { background: #353535; color: #fff; }
         .danger { background: #732d2d; color: #fff; }
         .section-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-        .hero-slide-card { display: grid; gap: 12px; padding: 16px; border-radius: 14px; background: #1c1c1c; border: 1px solid rgba(199, 169, 110, 0.18); }
+        .hero-slide-card { display: grid; grid-template-columns: minmax(220px, 360px) minmax(0, 1fr); gap: 18px; padding: 16px; border-radius: 14px; background: #1c1c1c; border: 1px solid rgba(199, 169, 110, 0.18); }
         .hero-slide-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .hero-slide-preview { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; background: #101010; border: 1px solid #343434; }
+        .hero-slide-preview img { display: block; width: 100%; height: 100%; object-fit: cover; }
+        .hero-slide-preview span { display: grid; place-items: center; width: 100%; height: 100%; color: #8c8374; font-size: 13px; }
+        .hero-slide-fields { display: grid; gap: 12px; align-content: start; }
+        .compact-row { display: grid; grid-template-columns: minmax(120px, 180px) 1fr; gap: 12px; align-items: end; }
         .checkbox-row { display: flex; align-items: center; gap: 8px; }
         .checkbox-row input { width: auto; }
         .actions { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -39,7 +44,7 @@
         [hidden] { display: none !important; }
         .hint { color: #b7ac98; font-size: 13px; line-height: 1.5; }
         .code-note { font-family: Consolas, monospace; white-space: pre-wrap; background: #101010; border: 1px solid #343434; border-radius: 10px; padding: 14px; color: #d5d0c5; }
-        @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } .toolbar { flex-direction: column; align-items: flex-start; } }
+        @media (max-width: 860px) { .grid, .hero-slide-card, .compact-row { grid-template-columns: 1fr; } .toolbar { flex-direction: column; align-items: flex-start; } }
     </style>
 </head>
 <body>
@@ -70,12 +75,11 @@
 
             <div class="tabbar">
                 <button type="button" class="active" data-tab-trigger="hero">Hero</button>
-                <button type="button" data-tab-trigger="about-images">About Images</button>
                 <button type="button" data-tab-trigger="schema">Schema</button>
             </div>
 
             <div data-tab-panel="hero" class="stack">
-                <section class="panel">
+                <section class="panel" hidden>
                     <div class="section-head">
                         <h2>Hero Settings</h2>
                         <button id="saveHeroSettingsBtn" class="primary" type="button">Save Settings</button>
@@ -101,35 +105,19 @@
                 </section>
             </div>
 
-            <div data-tab-panel="about-images" class="stack" hidden>
-                <section class="panel">
-                    <div class="section-head">
-                        <h2>About Images</h2>
-                        <div class="actions">
-                            <button id="addAboutImageBtn" class="secondary" type="button">Add Image</button>
-                            <button id="saveAboutImagesBtn" class="primary" type="button">Save Images</button>
-                        </div>
-                    </div>
-                    <p class="hint">These images replace the hard-coded Elementor images in the WHO WE ARE section.</p>
-                    <div id="aboutImagesList" class="stack"></div>
-                </section>
-            </div>
-
             <div data-tab-panel="schema" class="panel" hidden>
                 <h2>Schema Notes</h2>
-                <p class="hint">Run `hero_schema.sql` in Supabase SQL Editor. Tata BarberShop uses its own table names and storage bucket for hero/about content. After that, fill `static/js/tata-baber-supabase-config.js` with your project URL and keys.</p>
+                <p class="hint">Run `hero_schema.sql` in Supabase SQL Editor. Supabase stores banner images only; banner text is fixed in code.</p>
                 <div class="code-note">Tables used by this admin:
+- tata_baber_hero_slides
+
+Image upload:
+- Cloudinary unsigned upload preset
+- Supabase stores image_url and thumb_url only
+
+Browser local cache keys (not Supabase tables):
 - tata_baber_hero_settings
 - tata_baber_hero_slides
-- tata_baber_about_images
-
-Storage bucket:
-- tata-baber
-
-Local cache keys:
-- tata_baber_hero_settings
-- tata_baber_hero_slides
-- tata_baber_about_images
 - tata_baber_admin_auth</div>
             </div>
         </section>

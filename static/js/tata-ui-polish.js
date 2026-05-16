@@ -125,6 +125,30 @@
             heroWrapper.appendChild(actions);
         }
 
+        const mountHeroContactCard = () => {
+            if (!heroWrapper) return;
+            document.querySelectorAll('.tata-hero-contact-card').forEach((card) => {
+                if (card.parentElement !== heroWrapper) card.remove();
+            });
+            if (heroWrapper.querySelector('.tata-hero-contact-card')) return;
+            const contactCard = document.createElement('aside');
+            contactCard.className = 'tata-hero-contact-card';
+            contactCard.setAttribute('aria-label', 'Barbershop contact details');
+            contactCard.innerHTML = [
+                '<span class="tata-hero-contact-card__label">Location</span>',
+                '<strong>' + siteInfo.address + '</strong>',
+                '<a href="tel:' + siteInfo.tel + '">' + siteInfo.phone + '</a>'
+            ].join('');
+            heroWrapper.appendChild(contactCard);
+        };
+
+        mountHeroContactCard();
+        window.setTimeout(mountHeroContactCard, 600);
+        window.setTimeout(mountHeroContactCard, 1600);
+        if (window.tataBaberHeroReady && typeof window.tataBaberHeroReady.finally === 'function') {
+            window.tataBaberHeroReady.finally(mountHeroContactCard);
+        }
+
         if (heroWrapper && !document.querySelector('.tata-trust-strip')) {
             const strip = document.createElement('section');
             strip.className = 'tata-trust-strip';
@@ -158,35 +182,35 @@
         if (serviceCardsSection) {
             const serviceData = [
                 {
-                    title: "Střih Vlasů / MEN'S HAIRCUT",
+                    title: "Men's Haircut",
                     description: 'Classic haircut with clean finishing and styling.',
                     price: '300 Kč',
                     duration: '50 min',
                     tone: 'blue'
                 },
                 {
-                    title: 'Stříhání & Úprava Vousů / Haircut & Beard Trim',
+                    title: 'Haircut & Beard Trim',
                     description: 'Complete haircut and beard trim package.',
                     price: '450 Kč',
                     duration: '60 min',
                     tone: 'purple'
                 },
                 {
-                    title: 'Střih Vlasů - Děti (od 5 do 10 let)',
+                    title: 'Kids Haircut (Ages 5 to 10)',
                     description: 'Haircut for children from 5 to 10 years old.',
                     price: '250 Kč',
                     duration: '40 min',
                     tone: 'red'
                 },
                 {
-                    title: 'Úprava Vousů / Beard Trim',
+                    title: 'Beard Trim',
                     description: 'Beard shaping, trimming and clean contour.',
                     price: '150 Kč',
                     duration: '20 min',
                     tone: 'gold'
                 },
                 {
-                    title: 'Dlouhé vlasy - Nebo s jenom nůžkama / Long hair or with scissors',
+                    title: 'Long Hair or Scissor Cut',
                     description: 'Long hair cut or full scissor haircut.',
                     price: '400 Kč',
                     duration: '60 min',
@@ -220,11 +244,11 @@
             const pricingContainer = pricingSection.querySelector('.elementor-container');
             if (pricingContainer) {
                 const servicesForPricing = [
-                    ['01', "Střih Vlasů / MEN'S HAIRCUT", 'Classic haircut with clean finishing and styling.', '300 Kč', '50 min', 'blue'],
-                    ['02', 'Stříhání & Úprava Vousů / Haircut & Beard Trim', 'Complete haircut and beard trim package.', '450 Kč', '60 min', 'purple'],
-                    ['03', 'Střih Vlasů - Děti (od 5 do 10 let)', 'Haircut for children from 5 to 10 years old.', '250 Kč', '40 min', 'red'],
-                    ['04', 'Úprava Vousů / Beard Trim', 'Beard shaping, trimming and clean contour.', '150 Kč', '20 min', 'gold'],
-                    ['05', 'Dlouhé vlasy - Nebo s jenom nůžkama / Long hair or with scissors', 'Long hair cut or full scissor haircut.', '400 Kč', '60 min', 'gray']
+                    ['01', "Men's Haircut", 'Classic haircut with clean finishing and styling.', '300 Kč', '50 min', 'blue'],
+                    ['02', 'Haircut & Beard Trim', 'Complete haircut and beard trim package.', '450 Kč', '60 min', 'purple'],
+                    ['03', 'Kids Haircut (Ages 5 to 10)', 'Haircut for children from 5 to 10 years old.', '250 Kč', '40 min', 'red'],
+                    ['04', 'Beard Trim', 'Beard shaping, trimming and clean contour.', '150 Kč', '20 min', 'gold'],
+                    ['05', 'Long Hair or Scissor Cut', 'Long hair cut or full scissor haircut.', '400 Kč', '60 min', 'gray']
                 ];
                 pricingContainer.innerHTML = [
                     '<div class="tata-reservio-pricing">',
@@ -244,6 +268,16 @@
                 ].join('');
             }
         }
+
+        const dedupeGalleryLightbox = () => {
+            document.querySelectorAll('#portfolio_module_698cb3e18eb6a .swiper-slide-duplicate a[data-elementor-lightbox-slideshow]').forEach((link) => {
+                link.removeAttribute('data-elementor-open-lightbox');
+                link.removeAttribute('data-elementor-lightbox-slideshow');
+            });
+        };
+
+        dedupeGalleryLightbox();
+        window.setTimeout(dedupeGalleryLightbox, 500);
 
         window.setTimeout(function () {
             if (typeof window.tataApplyLanguage === 'function') {
