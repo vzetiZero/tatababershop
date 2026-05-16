@@ -67,7 +67,7 @@
             'Email receiving address is not configured yet.': 'Přijímací e-mail ještě není nastaven.',
             'Opening your email app...': 'Otevírám e-mailovou aplikaci...',
             'Online booking': 'Online rezervace',
-            'Professional haircut, beard trim and grooming services in Praha 3.': 'Profesionální střihy, úprava vousů a grooming v Praze 3.',
+            'Professional haircut, beard trim and grooming services in Praha 3.': 'Profesionální střihy, úprava vousů a pánská péče v Praze 3.',
             'Book your appointment directly through Reservio.': 'Rezervujte si termín přímo přes Reservio.',
             'Copyright © 2026 Tata BarberShop. All Rights Reserved.': 'Copyright © 2026 Tata BarberShop. Všechna práva vyhrazena.',
             'Most Popular': 'Nejoblíbenější',
