@@ -4,6 +4,7 @@
         name: 'Tata BarberShop',
         logo: 'static/images/tata-logo.png',
         address: 'Husitsk\u00e1 27, Praha 3',
+        mapUrl: 'https://www.google.com/maps?cid=3900946233643861895&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAMYASAF&hl=vi&source=embed',
         phone: '+420 773 338 678',
         tel: '+420773338678',
         contactEmail: '',
@@ -136,7 +137,7 @@
             contactCard.setAttribute('aria-label', 'Barbershop contact details');
             contactCard.innerHTML = [
                 '<span class="tata-hero-contact-card__label">Location</span>',
-                '<strong>' + siteInfo.address + '</strong>',
+                '<strong><a class="tata-hero-contact-card__address" href="' + siteInfo.mapUrl + '" target="_blank" rel="noopener">' + siteInfo.address + '</a></strong>',
                 '<a href="tel:' + siteInfo.tel + '">' + siteInfo.phone + '</a>'
             ].join('');
             heroWrapper.appendChild(contactCard);
@@ -234,7 +235,7 @@
                 if (card.querySelector('.tata-service-meta')) return;
                 const meta = document.createElement('div');
                 meta.className = 'tata-service-meta';
-                meta.innerHTML = '<span>' + data.price + '</span><span>' + data.duration + '</span><span>Reservio</span>';
+                meta.innerHTML = '<span>' + data.price + '</span><span>Reservio</span>';
                 card.appendChild(meta);
             });
         }

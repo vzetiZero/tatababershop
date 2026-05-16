@@ -490,6 +490,11 @@ body.has-tata-nav {
     border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
+.tata-hero-contact-card .tata-hero-contact-card__address {
+    padding-top: 0;
+    border-top: 0;
+}
+
 .tata-hero-contact-card a:hover {
     color: #d8bd82 !important;
 }
