@@ -48,7 +48,12 @@
     };
 
     const loadHeroSlides = async function () {
-        if (config.isSupabaseConfigured && config.isSupabaseConfigured()) {
+        const local = config.loadLocal ? config.loadLocal(slidesKey, null) : null;
+        if (local) {
+            return normalizeSlides(local);
+        }
+
+        if (config.publicHeroRemote && config.isSupabaseConfigured && config.isSupabaseConfigured()) {
             try {
                 const rows = await config.supabaseFetch(heroSlidesTable + '?select=*&active=eq.true&order=sort_order.asc', {}, false);
                 if (Array.isArray(rows) && rows.length) {
@@ -64,10 +69,6 @@
                     console.warn('Hero slides fallback to defaults:', error);
                 }
             }
-        }
-        const local = config.loadLocal ? config.loadLocal(slidesKey, null) : null;
-        if (local) {
-            return normalizeSlides(local);
         }
         return normalizeSlides(defaultSlides);
     };

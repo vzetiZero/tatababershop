@@ -12,6 +12,7 @@
             uploadPreset: 'ken_barbershop',
             folder: 'tatabarbershop'
         },
+        publicHeroRemote: false,
         storageBucket: 'tata-baber',
         adminAuthKey: 'tata_baber_admin_auth',
         localKeys: {
