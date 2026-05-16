@@ -1662,7 +1662,8 @@ body.has-tata-nav {
     }
 
     .tata-about-images {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px !important;
     }
 
     .tata-about-image:nth-child(3n) {
@@ -1671,7 +1672,7 @@ body.has-tata-nav {
 
     .tata-about-image img,
     .tata-about-image:nth-child(3n) img {
-        height: min(120vw, 520px);
+        height: clamp(160px, 48vw, 240px);
     }
 
     .elementor-element-c6b581f > .elementor-container,
@@ -1744,5 +1745,12 @@ body.has-tata-nav {
     .tata-footer-bottom a {
         margin-left: 0;
         margin-right: 16px;
+    }
+}
+
+@media (max-width: 420px) {
+    .tata-about-image img,
+    .tata-about-image:nth-child(3n) img {
+        height: clamp(140px, 44vw, 190px);
     }
 }
