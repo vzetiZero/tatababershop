@@ -36,6 +36,11 @@
         return element;
     };
 
+    const mapAddressLink = (className) => {
+        const classAttr = className ? ' class="' + className + '"' : '';
+        return '<a' + classAttr + ' href="' + siteInfo.mapUrl + '" target="_blank" rel="noopener">' + siteInfo.address + '</a>';
+    };
+
     const applySiteInfo = () => {
         document.title = siteInfo.name + ' | Barbershop Praha 3';
 
@@ -45,12 +50,12 @@
         });
 
         document.querySelectorAll('rs-layer[id$="-layer-6"]').forEach((layer) => {
-            layer.innerHTML = siteInfo.address;
+            layer.innerHTML = mapAddressLink('');
         });
 
         const footerAddress = document.querySelector('[data-id="4aac570"] .elementor-widget-container');
         if (footerAddress) {
-            footerAddress.innerHTML = '<p>' + siteInfo.address + '</p>';
+            footerAddress.innerHTML = '<p>' + mapAddressLink('') + '</p>';
         }
 
         document.querySelectorAll('.wgl-logotype-container img, img[alt="logotype"]').forEach((image) => {
