@@ -144,28 +144,20 @@
     const normalizeFixedSlides = (slides) => {
         const source = Array.isArray(slides) ? slides : [];
         const fixedSlides = Array.isArray(config.defaultHeroSlides) ? config.defaultHeroSlides : [];
-        const normalizedFixed = fixedSlides.map((fixedSlide, index) => {
-            const savedSlide = source[index] || {};
-            return Object.assign({}, fixedSlide, {
-                image_url: savedSlide.image_url || fixedSlide.image_url,
-                thumb_url: savedSlide.thumb_url || fixedSlide.thumb_url,
-                active: savedSlide.active !== undefined ? savedSlide.active : fixedSlide.active,
-                id: fixedSlide.id,
+        const baseSlides = source.length ? source : fixedSlides;
+        return baseSlides.map((slide, index) => {
+            const fixedSlide = fixedSlides[index] || {};
+            const sourceSlide = source.length ? slide : fixedSlide;
+            return Object.assign({}, fixedSlide, sourceSlide, {
+                image_url: source.length ? (sourceSlide.image_url || '') : (fixedSlide.image_url || ''),
+                thumb_url: source.length ? (sourceSlide.thumb_url || sourceSlide.image_url || '') : (fixedSlide.thumb_url || fixedSlide.image_url || ''),
+                active: sourceSlide.active !== undefined ? sourceSlide.active : fixedSlide.active !== false,
+                id: sourceSlide.id || fixedSlide.id || ('hero-slide-' + (index + 1)),
                 tab_title: fixedSlide.tab_title || '',
                 eyebrow: fixedSlide.eyebrow || '',
-                sort_order: Number(savedSlide.sort_order || fixedSlide.sort_order || index + 1)
+                sort_order: Number(sourceSlide.sort_order || fixedSlide.sort_order || index + 1)
             });
         });
-        const extraSlides = source.slice(fixedSlides.length).map((slide, extraIndex) => ({
-            id: slide.id || ('hero-slide-extra-' + (extraIndex + 1)),
-            image_url: slide.image_url || '',
-            thumb_url: slide.thumb_url || '',
-            active: slide.active !== false,
-            tab_title: '',
-            eyebrow: '',
-            sort_order: Number(slide.sort_order || fixedSlides.length + extraIndex + 1)
-        }));
-        return normalizedFixed.concat(extraSlides);
     };
 
     const loadLocalState = () => {

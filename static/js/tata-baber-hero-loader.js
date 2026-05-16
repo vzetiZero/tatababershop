@@ -29,28 +29,18 @@
         const source = slides
             .filter((slide) => slide)
             .sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0));
-        const normalizedFixed = fallback.map((fixedSlide, index) => {
-            const savedSlide = source[index] || {};
-            return Object.assign({}, fixedSlide, {
-                image_url: savedSlide.image_url || fixedSlide.image_url,
-                thumb_url: savedSlide.thumb_url || fixedSlide.thumb_url,
-                active: savedSlide.active !== undefined ? savedSlide.active : fixedSlide.active,
-                id: fixedSlide.id,
+        return source.map((slide, index) => {
+            const fixedSlide = fallback[index] || {};
+            return Object.assign({}, fixedSlide, slide, {
+                image_url: slide.image_url || '',
+                thumb_url: slide.thumb_url || slide.image_url || '',
+                active: slide.active !== undefined ? slide.active : fixedSlide.active !== false,
+                id: slide.id || fixedSlide.id || ('hero-slide-' + (index + 1)),
                 tab_title: fixedSlide.tab_title || '',
                 eyebrow: fixedSlide.eyebrow || '',
-                sort_order: Number(savedSlide.sort_order || fixedSlide.sort_order || index + 1)
+                sort_order: Number(slide.sort_order || fixedSlide.sort_order || index + 1)
             });
-        });
-        const extraSlides = source.slice(fallback.length).map((slide, extraIndex) => ({
-            id: slide.id || ('hero-slide-extra-' + (extraIndex + 1)),
-            tab_title: '',
-            eyebrow: '',
-            image_url: slide.image_url || '',
-            thumb_url: slide.thumb_url || '',
-            active: slide.active !== false,
-            sort_order: Number(slide.sort_order || fallback.length + extraIndex + 1)
-        }));
-        return normalizedFixed.concat(extraSlides).filter((slide) => slide.active !== false);
+        }).filter((slide) => slide.active !== false);
     };
 
     const loadHeroSettings = async function () {
@@ -58,10 +48,6 @@
     };
 
     const loadHeroSlides = async function () {
-        const local = config.loadLocal ? config.loadLocal(slidesKey, null) : null;
-        if (local) {
-            return normalizeSlides(local);
-        }
         if (config.isSupabaseConfigured && config.isSupabaseConfigured()) {
             try {
                 const rows = await config.supabaseFetch(heroSlidesTable + '?select=*&active=eq.true&order=sort_order.asc', {}, false);
@@ -78,6 +64,10 @@
                     console.warn('Hero slides fallback to defaults:', error);
                 }
             }
+        }
+        const local = config.loadLocal ? config.loadLocal(slidesKey, null) : null;
+        if (local) {
+            return normalizeSlides(local);
         }
         return normalizeSlides(defaultSlides);
     };
