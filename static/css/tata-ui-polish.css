@@ -786,10 +786,7 @@ body.has-tata-nav {
     overflow: hidden;
     padding-top: clamp(64px, 7vw, 104px) !important;
     padding-bottom: clamp(64px, 7vw, 104px) !important;
-    background:
-        linear-gradient(90deg, rgba(255, 250, 240, 0.76) 0%, rgba(255, 250, 240, 0.58) 50%, rgba(255, 250, 240, 0.74) 100%),
-        linear-gradient(180deg, rgba(247, 239, 222, 0.62), rgba(255, 250, 240, 0.72)),
-        url("../../images-tatabarber/anh_shop05.jpg") center / cover no-repeat !important;
+    background: #fffaf0 !important;
 }
 
 .elementor-1371 .elementor-element-9080169::before {
@@ -1723,8 +1720,30 @@ body.has-tata-nav {
 
     .tata-trust-strip {
         grid-template-columns: 1fr;
-        margin: 10px auto 8px;
+        margin: 4px auto 8px !important;
         padding: 0 18px;
+        gap: 6px;
+    }
+
+    .tata-trust-strip__item {
+        display: block;
+        min-height: 0;
+        padding: 10px 14px !important;
+        box-shadow: none;
+    }
+
+    .tata-trust-strip__value {
+        display: block;
+        font-size: 20px;
+        line-height: 1.05;
+    }
+
+    .tata-trust-strip__label {
+        display: block;
+        margin-top: 5px;
+        font-size: 11px;
+        line-height: 1.2;
+        letter-spacing: 0.05em;
     }
 
     .elementor-section.elementor-top-section:not(:first-child) {
@@ -1756,7 +1775,12 @@ body.has-tata-nav {
     .elementor-609 .elementor-element-fc33a6d > .elementor-container {
         display: grid !important;
         grid-template-columns: 1fr !important;
-        gap: 22px !important;
+        gap: 10px !important;
+    }
+
+    .elementor-609 .elementor-element-fc33a6d {
+        padding-top: 8px !important;
+        padding-bottom: 14px !important;
     }
 
     .elementor-609 .elementor-element-fc33a6d .elementor-column {
@@ -1787,7 +1811,12 @@ body.has-tata-nav {
         width: min(360px, calc(100% - 36px)) !important;
         max-width: 360px !important;
         justify-items: stretch;
-        gap: 26px;
+        gap: 12px;
+    }
+
+    .elementor-element-c6b581f {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
     }
 
     .elementor-element-c6b581f .elementor-widget-wrap,
@@ -1856,12 +1885,42 @@ body.has-tata-nav {
     }
 
     .elementor-element-c6b581f .wgl-button-cf7 {
-        margin-top: 8px !important;
+        margin-top: 6px !important;
+        margin-bottom: 0 !important;
     }
 
     .elementor-element-c6b581f .wpcf7-submit {
         min-height: 50px !important;
         padding: 0 24px !important;
+    }
+
+    .elementor-element-c6b581f .wpcf7-response-output {
+        margin: 0 !important;
+    }
+
+    main {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    body > .elementor-element-48e7d46 {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    body > .elementor-element-48e7d46 .elementor-widget-container,
+    body > .elementor-element-48e7d46 .elementor-custom-embed {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    body > .elementor-element-48e7d46 iframe {
+        display: block;
+        width: 100% !important;
+        min-height: 280px !important;
+        height: 280px !important;
     }
 
     .tata-reservio-service {
@@ -1886,16 +1945,129 @@ body.has-tata-nav {
         width: 100%;
     }
 
+    .elementor-59 .elementor-element-6e6e599,
+    .elementor-59 .elementor-element-ea5414a {
+        display: none !important;
+    }
+
+    .elementor-59,
+    .elementor-59 .elementor-section,
+    .elementor-59 .elementor-container,
+    .elementor-59 .elementor-column,
+    .elementor-59 .elementor-widget-wrap,
+    .elementor-59 .elementor-widget-container,
+    .elementor-59 .elementor-custom-embed {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .elementor-element-00284d3 {
+        padding-bottom: 4px !important;
+        margin-bottom: 0 !important;
+    }
+
+    .elementor-59 .elementor-element-48e7d46 {
+        width: min(384px, calc(100% - 36px)) !important;
+        max-width: 384px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-bottom: 0 !important;
+    }
+
+    .elementor-59 .elementor-element-48e7d46 iframe {
+        min-height: 132px !important;
+        height: 132px !important;
+    }
+
+    .elementor-1371 .elementor-element-36bdf60 {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding-top: 4px !important;
+        padding-bottom: 6px !important;
+    }
+
+    .elementor-1371 .elementor-element-36bdf60 > .elementor-container {
+        gap: 8px !important;
+    }
+
+    .elementor-1371 .elementor-element-afa68d3 > .elementor-element-populated,
+    .elementor-1371 .elementor-element-c8ab870 > .elementor-element-populated {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .elementor-1371 .elementor-element-c8ab870 .elementor-widget-spacer {
+        display: none !important;
+    }
+
+    .elementor-1371 .elementor-element-36bdf60 .dblh__subtitle {
+        margin-bottom: 4px !important;
+        font-size: 12px !important;
+        line-height: 1.15 !important;
+    }
+
+    .elementor-1371 .elementor-element-36bdf60 .dblh__title-wrapper {
+        font-size: 30px !important;
+        line-height: 1.12 !important;
+        margin-bottom: 0 !important;
+    }
+
+    .elementor-1371 .elementor-element-cdfa778 {
+        margin-top: 2px !important;
+    }
+
+    .elementor-1371 .elementor-element-cdfa778 .wgl-button {
+        min-height: 52px !important;
+        padding: 0 18px !important;
+    }
+
+    .elementor-1371 .elementor-element-cdfa778 .button__text {
+        font-size: 15px !important;
+    }
+
     .elementor-1371 .elementor-element-9080169 {
-        background:
-            linear-gradient(90deg, rgba(255, 250, 240, 0.8) 0%, rgba(255, 250, 240, 0.62) 50%, rgba(255, 250, 240, 0.78) 100%),
-            linear-gradient(180deg, rgba(247, 239, 222, 0.64), rgba(255, 250, 240, 0.74)),
-            url("../../images-tatabarber/anh_shop05.jpg") center / cover no-repeat !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
+        background: #fffaf0 !important;
+    }
+
+    .elementor-1371 .elementor-element-9080169::before,
+    .elementor-1371 .elementor-element-9080169 .elementor-widget-spacer {
+        display: none !important;
+        content: none !important;
+    }
+
+    .elementor-1371 .elementor-element-9080169 > .elementor-container {
+        gap: 8px !important;
+    }
+
+    .elementor-1371 .elementor-element-9080169 .elementor-widget-wrap {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
     }
 
     .elementor-1371 .elementor-element-9080169 .wgl-infobox_wrapper {
         background: rgba(255, 250, 240, 0.68);
         backdrop-filter: blur(2px);
+        padding: 16px !important;
+    }
+
+    .elementor-1371 .elementor-element-9080169 .media-wrapper .elementor-icon {
+        margin-bottom: 10px !important;
+    }
+
+    .elementor-1371 .elementor-element-9080169 .wgl-infobox_title {
+        margin-bottom: 6px !important;
+    }
+
+    .elementor-1371 .elementor-element-9080169 .wgl-infobox_content p {
+        min-height: 0 !important;
+        margin-bottom: 6px !important;
+        line-height: 1.32 !important;
     }
 
     .elementor-element-00284d3 .wgl-portfolio_container {
