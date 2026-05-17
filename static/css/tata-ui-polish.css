@@ -1372,7 +1372,7 @@ body.has-tata-nav {
 }
 
 .tata-footer-grid h3 {
-    margin: 0 0 18px;
+    margin: 0 0 12px;
     color: #fff;
     font-size: 16px;
     font-weight: 900;
@@ -1384,11 +1384,11 @@ body.has-tata-nav {
 .tata-footer-grid a {
     color: #bdb8ad;
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.45;
 }
 
 .tata-footer-grid p {
-    margin: 0 0 6px;
+    margin: 0;
 }
 
 .tata-footer-grid span {
@@ -1723,18 +1723,34 @@ body.has-tata-nav {
 
     .tata-trust-strip {
         grid-template-columns: 1fr;
-        margin: 28px auto 20px;
+        margin: 10px auto 8px;
         padding: 0 18px;
     }
 
     .elementor-section.elementor-top-section:not(:first-child) {
-        padding-top: 58px;
-        padding-bottom: 58px;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
 
     .elementor-section.elementor-section-boxed > .elementor-container {
         padding-left: 18px !important;
         padding-right: 18px !important;
+    }
+
+    .elementor-widget:not(:last-child) {
+        margin-bottom: 6px !important;
+    }
+
+    .elementor-widget-container p {
+        margin-bottom: 4px;
+    }
+
+    .elementor-column-gap-default > .elementor-column > .elementor-element-populated,
+    .elementor-column-gap-extended > .elementor-column > .elementor-element-populated,
+    .elementor-column-gap-wide > .elementor-column > .elementor-element-populated,
+    .elementor-column-gap-wider > .elementor-column > .elementor-element-populated {
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
     }
 
     .elementor-609 .elementor-element-fc33a6d > .elementor-container {
@@ -1956,18 +1972,63 @@ body.has-tata-nav {
         font-size: 12px;
     }
 
-    .tata-footer-grid {
+    .footer .tata-footer-grid {
+        display: block !important;
         grid-template-columns: 1fr !important;
         width: calc(100% - 36px) !important;
-        padding-top: 42px;
-        padding-bottom: 36px;
-        gap: 28px;
+        padding-top: 14px !important;
+        padding-bottom: 12px !important;
+        gap: 0 !important;
+    }
+
+    .footer .tata-footer-grid > div {
+        margin: 0 0 10px !important;
+    }
+
+    .footer .tata-footer-grid > div:last-child {
+        margin-bottom: 0 !important;
+    }
+
+    .tata-footer-grid h3 {
+        margin: 0 0 3px !important;
+        font-size: 15px;
+        line-height: 1.15;
+    }
+
+    .tata-footer-grid p,
+    .tata-footer-grid a {
+        line-height: 1.18 !important;
+    }
+
+    .tata-footer-logo {
+        margin-bottom: 4px !important;
+    }
+
+    .tata-social-block--footer {
+        margin-top: 5px !important;
+    }
+
+    .tata-social-block--footer > strong {
+        margin-bottom: 4px;
+    }
+
+    .tata-social-block--footer .tata-social-links {
+        gap: 8px;
+    }
+
+    .tata-footer-booking {
+        min-height: 38px;
+        margin-top: 4px;
     }
 
     .tata-footer-bottom .wgl-container {
         display: grid;
-        gap: 10px;
+        gap: 4px;
         width: calc(100% - 36px);
+    }
+
+    .tata-footer-bottom {
+        padding: 10px 0;
     }
 
     .tata-footer-bottom a {
