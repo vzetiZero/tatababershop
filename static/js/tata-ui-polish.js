@@ -64,7 +64,11 @@
             image.alt = siteInfo.name;
             image.style.height = '56px';
             image.style.width = '56px';
-            image.style.objectFit = 'contain';
+            image.style.objectFit = 'cover';
+            image.style.borderRadius = '50%';
+            image.style.border = '1px solid rgba(199, 169, 110, 0.62)';
+            image.style.boxShadow = 'inset 0 0 0 3px rgba(15, 15, 15, 0.18)';
+            image.style.background = '#fff';
         });
 
         const footerContact = document.querySelector('[data-id="a13f97e"] .elementor-widget-container');
@@ -291,7 +295,7 @@
 
         window.setTimeout(function () {
             if (typeof window.tataApplyLanguage === 'function') {
-                window.tataApplyLanguage(window.localStorage.getItem('bladehubLang') || 'en');
+                window.tataApplyLanguage(window.localStorage.getItem('bladehubLang') || 'uk');
             }
         }, 0);
 
@@ -319,7 +323,7 @@
                 const setFormMessage = (text) => {
                     message.textContent = text;
                     if (window.tataApplyLanguage) {
-                        window.tataApplyLanguage(window.localStorage.getItem('bladehubLang') || 'en');
+                        window.tataApplyLanguage(window.localStorage.getItem('bladehubLang') || 'uk');
                     }
                 };
 

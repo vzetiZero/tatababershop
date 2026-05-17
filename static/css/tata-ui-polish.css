@@ -69,6 +69,7 @@ body.has-tata-nav {
     height: 42px;
     overflow: hidden;
     border: 1px solid rgba(199, 169, 110, 0.55);
+    box-shadow: inset 0 0 0 3px rgba(15, 15, 15, 0.16);
     background: #fff;
     color: #111;
     font-size: 17px;
@@ -80,6 +81,14 @@ body.has-tata-nav {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 50%;
+}
+
+.wgl-logotype-container img {
+    border: 1px solid rgba(199, 169, 110, 0.62) !important;
+    border-radius: 50% !important;
+    box-shadow: inset 0 0 0 3px rgba(15, 15, 15, 0.18) !important;
+    background: #fff !important;
 }
 
 .tata-nav {
@@ -1398,10 +1407,32 @@ body.has-tata-nav {
     line-height: 1.1 !important;
 }
 
-.tata-footer-logo img {
+.tata-footer-logo__mark {
+    position: relative;
+    display: inline-flex;
+    flex: 0 0 56px;
+    align-items: center;
+    justify-content: center;
     width: 56px;
     height: 56px;
-    object-fit: contain;
+    overflow: hidden;
+    border: 1px solid rgba(199, 169, 110, 0.62) !important;
+    border-radius: 50% !important;
+    box-shadow: inset 0 0 0 3px rgba(15, 15, 15, 0.18) !important;
+    background: #fff !important;
+}
+
+.tata-footer-logo__mark img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border: 0 !important;
+    border-radius: 50% !important;
+    clip-path: circle(50% at 50% 50%);
+    transform: scale(1.18);
+    transform-origin: center;
 }
 
 .tata-footer-booking {
@@ -1736,6 +1767,87 @@ body.has-tata-nav {
         grid-template-columns: 1fr;
     }
 
+    .elementor-element-c6b581f > .elementor-container {
+        width: min(360px, calc(100% - 36px)) !important;
+        max-width: 360px !important;
+        justify-items: stretch;
+        gap: 26px;
+    }
+
+    .elementor-element-c6b581f .elementor-widget-wrap,
+    .elementor-element-c6b581f .wgl-contact-form-7,
+    .elementor-element-c6b581f .wpcf7 {
+        width: 100%;
+        max-width: 360px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .elementor-element-c6b581f .elementor-element-d071621 > .elementor-widget-wrap.elementor-element-populated {
+        width: min(360px, calc(100% - 48px)) !important;
+        max-width: 360px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .elementor-element-c6b581f .elementor-element-d071621 .elementor-widget {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .elementor-element-c6b581f .row {
+        gap: 0 !important;
+        row-gap: 0 !important;
+    }
+
+    .elementor-element-c6b581f .wpcf7 form {
+        gap: 0 !important;
+    }
+
+    .elementor-element-c6b581f .wpcf7 .row {
+        margin: 0 !important;
+    }
+
+    .elementor-element-c6b581f .wpcf7 .row [class*="wgl_col-"] {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .elementor-element-c6b581f .wpcf7 .row > [class*="wgl_col-"] + [class*="wgl_col-"] {
+        margin-top: 8px !important;
+    }
+
+    .elementor-element-c6b581f .wpcf7-form-control-wrap,
+    .elementor-element-c6b581f .wpcf7-form-control {
+        display: block !important;
+        margin: 0 !important;
+    }
+
+    .wpcf7 input:not([type="submit"]),
+    .wpcf7 select,
+    .wpcf7 textarea {
+        min-height: 44px;
+        margin: 0 !important;
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
+
+    .wpcf7 textarea {
+        min-height: 96px;
+        padding-top: 12px !important;
+    }
+
+    .elementor-element-c6b581f .wgl-button-cf7 {
+        margin-top: 8px !important;
+    }
+
+    .elementor-element-c6b581f .wpcf7-submit {
+        min-height: 50px !important;
+        padding: 0 24px !important;
+    }
+
     .tata-reservio-service {
         grid-template-columns: 58px minmax(0, 1fr);
         gap: 14px;
@@ -1770,9 +1882,58 @@ body.has-tata-nav {
         backdrop-filter: blur(2px);
     }
 
-    .wgl-portfolio_container .swiper-wrapper {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
+    .elementor-element-00284d3 .wgl-portfolio_container {
+        width: calc(100vw - 4px) !important;
+        max-width: calc(100vw - 4px) !important;
+        margin-left: 50% !important;
+        margin-right: 0 !important;
+        transform: translateX(-50%) !important;
+    }
+
+    .wgl-portfolio_container .swiper-wrapper,
+    .elementor-element-00284d3 .wgl-portfolio_container .swiper-wrapper,
+    .elementor-element-00284d3 .wgl-carousel .swiper-wrapper {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 4px !important;
+        width: 100% !important;
+        height: auto !important;
+        transform: none !important;
+    }
+
+    .elementor-element-00284d3 .wgl-portfolio_container .swiper-slide,
+    .elementor-element-00284d3 .wgl-carousel .swiper-slide,
+    .elementor-element-00284d3 .wgl-portfolio_container.col-4 .portfolio__item,
+    .elementor-element-00284d3 .wgl-portfolio_container .wgl-carousel .portfolio__item {
+        flex: none !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+        box-sizing: border-box !important;
+    }
+
+    .elementor-element-00284d3 .portfolio__item .item__wrapper,
+    .elementor-element-00284d3 .portfolio__item .item__image,
+    .elementor-element-00284d3 .portfolio__item img {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    .elementor-element-00284d3 .portfolio__item .item__wrapper,
+    .elementor-element-00284d3 .portfolio__item .item__image {
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .elementor-element-00284d3 .portfolio__item img {
+        display: block !important;
+        height: 100% !important;
+        object-fit: cover !important;
     }
 
     .tata-floating-actions {
@@ -1819,5 +1980,53 @@ body.has-tata-nav {
     .tata-about-image img,
     .tata-about-image:nth-child(3n) img {
         height: clamp(140px, 44vw, 190px);
+    }
+}
+
+.footer .tata-footer-logo .tata-footer-logo__mark,
+.footer .tata-footer-logo .tata-footer-logo__mark img {
+    border-radius: 999px !important;
+    clip-path: circle(50% at 50% 50%) !important;
+}
+
+.footer .tata-footer-logo .tata-footer-logo__mark {
+    contain: paint;
+    overflow: hidden !important;
+    -webkit-mask-image: radial-gradient(circle, #000 69%, transparent 70%);
+    mask-image: radial-gradient(circle, #000 69%, transparent 70%);
+}
+
+.footer .tata-footer-logo .tata-footer-logo__mark img {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+@media (max-width: 767px) {
+    .elementor-section.elementor-element-00284d3 .wgl-portfolio_container .swiper-wrapper {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 4px !important;
+    }
+
+    .elementor-section.elementor-element-00284d3 article.portfolio__item,
+    .elementor-section.elementor-element-00284d3 article.portfolio__item .item__wrapper,
+    .elementor-section.elementor-element-00284d3 article.portfolio__item .item__image,
+    .elementor-section.elementor-element-00284d3 article.portfolio__item img {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .elementor-section.elementor-element-00284d3 article.portfolio__item .item__wrapper,
+    .elementor-section.elementor-element-00284d3 article.portfolio__item .item__image {
+        aspect-ratio: 1 / 1 !important;
+    }
+
+    .elementor-section.elementor-element-00284d3 article.portfolio__item img {
+        display: block !important;
+        height: 100% !important;
+        object-fit: cover !important;
     }
 }
