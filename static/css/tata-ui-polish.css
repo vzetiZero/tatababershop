@@ -789,6 +789,31 @@ body.has-tata-nav {
     background: #fffaf0 !important;
 }
 
+@media (min-width: 1025px) {
+    .elementor-section.elementor-top-section:not(:first-child) {
+        padding-top: clamp(38px, 5vw, 72px);
+        padding-bottom: clamp(38px, 5vw, 72px);
+    }
+
+    .elementor-609 .elementor-element-fc33a6d {
+        padding-top: clamp(32px, 4vw, 56px) !important;
+        padding-bottom: clamp(38px, 5vw, 68px) !important;
+    }
+
+    .elementor-609 .elementor-element-fc33a6d > .elementor-container {
+        gap: clamp(20px, 3.5vw, 48px);
+    }
+
+    .elementor-1371 .elementor-element-36bdf60 {
+        margin-top: clamp(32px, 4vw, 56px) !important;
+    }
+
+    .elementor-1371 .elementor-element-9080169 {
+        padding-top: clamp(44px, 5vw, 76px) !important;
+        padding-bottom: clamp(44px, 5vw, 76px) !important;
+    }
+}
+
 .elementor-1371 .elementor-element-9080169::before {
     content: "";
     position: absolute;
@@ -1193,6 +1218,44 @@ body.has-tata-nav {
     width: auto !important;
     max-width: none !important;
     min-width: 0;
+}
+
+@media (min-width: 1025px) {
+    .elementor-element-c6b581f {
+        padding-top: 76px !important;
+        padding-bottom: 78px !important;
+    }
+
+    .elementor-element-c6b581f > .elementor-container {
+        width: min(1120px, calc(100% - 80px)) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        justify-content: center;
+    }
+
+    .elementor-element-c6b581f .elementor-element-4a807da {
+        grid-column: 1;
+    }
+
+    .elementor-element-c6b581f .elementor-element-d071621 {
+        grid-column: 2;
+    }
+
+    .elementor-element-c6b581f .elementor-element-d071621 > .elementor-widget-wrap.elementor-element-populated {
+        width: 100% !important;
+        max-width: 620px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 0 !important;
+    }
+
+    .elementor-element-c6b581f .elementor-element-d071621 .elementor-widget,
+    .elementor-element-c6b581f .elementor-element-d071621 .elementor-widget-container,
+    .elementor-element-c6b581f .elementor-element-d071621 .wgl-contact-form-7,
+    .elementor-element-c6b581f .elementor-element-d071621 .wpcf7 {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
 }
 
 .elementor-element-c6b581f .elementor-widget-wrap {
