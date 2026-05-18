@@ -26,8 +26,16 @@
     const normalizeSlides = (slides) => {
         const fallback = defaultSlides.map((slide) => Object.assign({}, slide));
         if (!Array.isArray(slides) || slides.length === 0) return fallback;
+        const isSpaSlide = (slide) => {
+            const text = [
+                slide.tab_title,
+                slide.title_primary
+            ].filter(Boolean).join(' ').toUpperCase();
+            return text.includes('SPA') || text.includes('MANICURE') || text.includes('MANIK');
+        };
         const source = slides
             .filter((slide) => slide)
+            .filter((slide) => !isSpaSlide(slide))
             .sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0));
         return source.map((slide, index) => {
             const fixedSlide = fallback[index] || {};
@@ -38,6 +46,7 @@
                 id: slide.id || fixedSlide.id || ('hero-slide-' + (index + 1)),
                 tab_title: fixedSlide.tab_title || '',
                 eyebrow: fixedSlide.eyebrow || '',
+                title_tertiary: '',
                 sort_order: Number(slide.sort_order || fixedSlide.sort_order || index + 1)
             });
         }).filter((slide) => slide.active !== false);

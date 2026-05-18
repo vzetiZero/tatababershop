@@ -35,7 +35,7 @@
                 eyebrow: 'MAKE YOUR STYLE MORE EXPRESSIVE',
                 title_primary: 'BARBERING',
                 title_secondary: 'GROOMING & SHAVING',
-                title_tertiary: 'MANICURE & SPA',
+                title_tertiary: '',
                 image_url: './images-tatabarber/banner01.jpg',
                 thumb_url: './images-tatabarber/banner01.jpg'
             },
@@ -47,19 +47,19 @@
                 eyebrow: 'FROM FADES TO BUZZ CUTS',
                 title_primary: 'BARBERING',
                 title_secondary: 'GROOMING & SHAVING',
-                title_tertiary: 'MANICURE & SPA',
+                title_tertiary: '',
                 image_url: './images-tatabarber/banner01.jpg',
                 thumb_url: './images-tatabarber/banner01.jpg'
             },
             {
                 id: 'hero-slide-3',
                 sort_order: 3,
-                active: true,
-                tab_title: 'MANICURE & SPA',
-                eyebrow: 'PREMIUM CARE FOR EVERY DETAIL',
+                active: false,
+                tab_title: '',
+                eyebrow: '',
                 title_primary: 'BARBERING',
                 title_secondary: 'GROOMING & SHAVING',
-                title_tertiary: 'MANICURE & SPA',
+                title_tertiary: '',
                 image_url: './images-tatabarber/banner02.jpg',
                 thumb_url: './images-tatabarber/banner02.jpg'
             }
