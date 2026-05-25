@@ -219,7 +219,7 @@
                 {
                     title: 'Beard Trim',
                     description: 'Beard shaping, trimming and clean contour.',
-                    price: '150 Kč',
+                    price: '200 Kč',
                     duration: '20 min',
                     tone: 'gold'
                 },
@@ -261,7 +261,7 @@
                     ['01', "Men's Haircut", 'Classic haircut with clean finishing and styling.', '300 Kč', '50 min', 'blue'],
                     ['02', 'Haircut & Beard Trim', 'Complete haircut and beard trim package.', '450 Kč', '60 min', 'purple'],
                     ['03', 'Kids Haircut (Ages 5 to 10)', 'Haircut for children from 5 to 10 years old.', '250 Kč', '40 min', 'red'],
-                    ['04', 'Beard Trim', 'Beard shaping, trimming and clean contour.', '150 Kč', '20 min', 'gold'],
+                    ['04', 'Beard Trim', 'Beard shaping, trimming and clean contour.', '200 Kč', '20 min', 'gold'],
                     ['05', 'Long Hair or Scissor Cut', 'Long hair cut or full scissor haircut.', '400 Kč', '60 min', 'gray']
                 ];
                 pricingContainer.innerHTML = [
